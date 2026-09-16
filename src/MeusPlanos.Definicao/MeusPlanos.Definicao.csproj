@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="Interface\Controller\**" />
+		<EmbeddedResource Remove="Interface\Controller\**" />
+		<None Remove="Interface\Controller\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Dhani.Utilitarios" Version="2.0.0.9" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+	</ItemGroup>
+
+</Project>

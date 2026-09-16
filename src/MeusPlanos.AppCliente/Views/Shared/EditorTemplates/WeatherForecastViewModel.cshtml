@@ -1,0 +1,37 @@
+﻿@model MeusPlanos.AppCliente.ViewModel.WeatherForecastViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="col-sm-6">
+    <div class="form-group">
+        <label asp-for="Id" class="control-label"></label>
+        <input asp-for="Id" class="form-control" disabled />
+        <span asp-validation-for="Id" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Date" class="control-label"></label>
+        <input asp-for="Date" class="form-control" />
+        <span asp-validation-for="Date" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TemperatureC" class="control-label"></label>
+        <input asp-for="TemperatureC" class="form-control" />
+        <span asp-validation-for="TemperatureC" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TemperatureF" class="control-label"></label>
+        <input asp-for="TemperatureF" class="form-control" />
+        <span asp-validation-for="TemperatureF" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Summary" class="control-label"></label>
+        <input asp-for="Summary" class="form-control" />
+        <span asp-validation-for="Summary" class="text-danger"></span>
+    </div>
+</div>
+
+<hr />
+<div class="mb-3">
+    <input asp-acessando-como type="submit" value="Salvar" class="btn btn-primary" />
+
+    <a class="btn @(ViewBag.ClasseBotao)secondary" asp-action="Index">Cancelar</a>
+</div>

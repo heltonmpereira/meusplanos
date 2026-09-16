@@ -1,0 +1,75 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+}
+
+<div class="login-box container pt-5 mb-5">
+    <div class="login-logo">
+        <a class="h1" asp-action="Index" asp-controller="Home">
+            <img class="brand-image ms-0" src="/img/logoSistema.png" alt="Icone do sistema">
+            <span class="d-inline-block">
+                <b>dhani</b> projetos
+            </span>
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">Entre para iniciar sua sessão</p>
+
+            <form asp-action="Index" method="post">
+                <input type="hidden" asp-for="ReturnUrl" class="form-control" autofocus />
+
+                <label asp-for="Username" class="form-label"></label>
+                <div class="input-group mb-3">
+                    <input asp-for="Username" class="form-control" autofocus autocomplete="off" placeholder="Usuário" />
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+
+                <label asp-for="Password" class="form-label"></label>
+                <div class="input-group mb-3">
+                    <input asp-for="Password" class="form-control" autocomplete="on" />
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-8">
+                        <div class="icheck-primary">
+                            <input type="checkbox" asp-for="ManterConectado">
+                            <label asp-for="ManterConectado"></label>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <input type="submit" value="Login" class="btn btn-primary btn-block" />
+                    </div>
+                </div>
+
+                <div asp-validation-summary="ModelOnly" class="text-warning"></div>
+            </form>
+
+            <p class="mb-1">
+                <a class="btn btn-link p-0" asp-action="RedefinirSenha">Esqueci minha senha</a>
+            </p>
+            <p class="mb-1">
+                <a class="btn btn-link p-0" asp-action="Registrar">Novo por aqui? Crie sua conta</a>
+            </p>
+        </div>
+    </div>
+</div>

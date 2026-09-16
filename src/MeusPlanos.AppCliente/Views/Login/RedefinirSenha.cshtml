@@ -1,0 +1,65 @@
+﻿@model MeusPlanos.AppCliente.ViewModel.Login.SolicitarRedefinicaoSenhaViewModel
+
+@{
+    ViewData["Title"] = "Redefinir Senha";
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+}
+
+<div class="login-box container pt-5 mb-5">
+    <div class="login-logo">
+        <a class="h1" asp-action="Index" asp-controller="Home">
+            <img class="brand-image ms-0" src="/img/logoSistema.png" alt="Icone do sistema">
+            <span class="d-inline-block">
+                <b>dhani</b> projetos
+            </span>
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body login-card-body">
+            <h3 class="text-center">Esqueci a senha</h3>
+            <p class="login-box-msg p-0 mb-3">Esqueceu sua senha? Preencha o formulário abaixo e solicite uma nova senha.</p>
+
+            <form asp-action="RedefinirSenha">
+                <fieldset class="form-group">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="Username" class="control-label"></label>
+                        <div class="input-group">
+                            <input asp-for="Username" class="form-control" autocomplete="on" autofocus placeholder="Informe o usuário utilizado no cadastro" />
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-user"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <div class="input-group">
+                            <input asp-for="Email" class="form-control" autocomplete="on" placeholder="Informe o e-mail utilizado no cadastro" />
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-envelope"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group float-end">
+                        <a class="btn btn-default" asp-action="Index">Cancelar</a>
+                        <input type="submit" value="Redefinir" class="btn btn-primary" />
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

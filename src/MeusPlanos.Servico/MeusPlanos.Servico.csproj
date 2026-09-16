@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\MeusPlanos.Definicao\MeusPlanos.Definicao.csproj" />
+		<ProjectReference Include="..\MeusPlanos.Modelo\MeusPlanos.Modelo.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.12" />
+  </ItemGroup>
+
+</Project>

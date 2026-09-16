@@ -1,0 +1,67 @@
+﻿@model MeusPlanos.AppCliente.ViewModel.Login.RedefinirSenhaViewModel
+
+@{
+    ViewData["Title"] = "Redefinição de senha";
+}
+
+<div class="login-box container pt-5 mb-5">
+    <div class="login-logo">
+        <a class="h1" asp-action="Index" asp-controller="Home">
+            <img class="brand-image ms-0" src="/img/logoSistema.png" alt="Icone do sistema">
+            <span class="d-inline-block">
+                <b>dhani</b> projetos
+            </span>
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body login-card-body">
+            <h3 class="text-center">Redefinir minha senha</h3>
+            <p class="login-box-msg p-0 mb-3">Informe abaixo a nova senha a ser utilizada para acessar o sistema.</p>
+
+            <form asp-action="AlterarSenhaComCodigoRedefinicao" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" class="form-control" />
+                <input type="hidden" asp-for="CodigoRedefinicaoSenha" class="form-control" />
+
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <div class="input-group">
+                        <input asp-for="Password" class="form-control" autofocus />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ConfirmarPassword" class="control-label"></label>
+                    <div class="input-group">
+                        <input asp-for="ConfirmarPassword" class="form-control" />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <span asp-validation-for="ConfirmarPassword" class="text-danger"></span>
+                </div>
+
+                <div class="form-group float-end">
+                    <a class="btn btn-default" asp-action="Index">Cancelar</a>
+                    <input type="submit" value="Redefinir Senha" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

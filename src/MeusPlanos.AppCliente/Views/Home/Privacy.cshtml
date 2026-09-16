@@ -1,0 +1,27 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment hostingEnv
+
+@{
+    var urlApi = Configuration["BaseUrlApi"];
+    var routePwa = Configuration["BaseRoutePwa"];
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<div class="col-sm-11 pt-4 px-sm-5">
+    <h1>@ViewData["Title"]</h1>
+
+    <p>Use this page to detail your site's privacy policy.</p>
+
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Url Base API</dt>
+        <dd class="col-sm-9">@urlApi</dd>
+
+        <dt class="col-sm-3">Url Base PWA</dt>
+        <dd class="col-sm-9">@routePwa</dd>
+
+        <dt class="col-sm-3">Ambiente de execução</dt>
+        <dd class="col-sm-9">@hostingEnv.EnvironmentName</dd>
+    </dl>
+</div>

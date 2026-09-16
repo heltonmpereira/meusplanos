@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/01-Comum/">
+    <Project Path="MeusPlanos.Definicao/MeusPlanos.Definicao.csproj" />
+  </Folder>
+  <Folder Name="/02-Servidor/">
+    <Project Path="MeusPlanos.AppServer/MeusPlanos.AppServer.csproj" />
+    <Project Path="MeusPlanos.Modelo/MeusPlanos.Modelo.csproj" />
+    <Project Path="MeusPlanos.Servico/MeusPlanos.Servico.csproj" />
+  </Folder>
+  <Folder Name="/03-Cliente/">
+    <Project Path="MeusPlanos.AppCliente/MeusPlanos.AppCliente.csproj" />
+  </Folder>
+  <Folder Name="/04-Teste/">
+    <Project Path="MeusPlanos.Teste.AppServer/MeusPlanos.Teste.AppServer.csproj" />
+  </Folder>
+</Solution>
