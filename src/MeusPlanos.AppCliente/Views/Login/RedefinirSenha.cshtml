@@ -28,7 +28,7 @@
 
             <form asp-action="RedefinirSenha">
                 <fieldset class="form-group">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div asp-validation-summary="ModelOnly" class="@ViewBag.ColorTextError"></div>
 
                     <div class="form-group">
                         <label asp-for="Username" class="control-label"></label>
@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                         </div>
-                        <span asp-validation-for="Username" class="text-danger"></span>
+                        <span asp-validation-for="Username" class="@ViewBag.ColorTextError"></span>
                     </div>
 
                     <div class="form-group">
@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                         </div>
-                        <span asp-validation-for="Email" class="text-danger"></span>
+                        <span asp-validation-for="Email" class="@ViewBag.ColorTextError"></span>
                     </div>
 
                     <div class="form-group float-end">

@@ -35,7 +35,7 @@
                             <span class="fas fa-user"></span>
                         </div>
                     </div>
-                    <span asp-validation-for="Username" class="text-danger"></span>
+                    <span asp-validation-for="Username" class="@ViewBag.ColorTextError"></span>
                 </div>
 
                 <label asp-for="Password" class="form-label"></label>
@@ -46,7 +46,7 @@
                             <span class="fas fa-lock"></span>
                         </div>
                     </div>
-                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <span asp-validation-for="Password" class="@ViewBag.ColorTextError"></span>
                 </div>
 
                 <div class="row">
