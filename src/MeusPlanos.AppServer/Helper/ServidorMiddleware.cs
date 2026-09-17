@@ -20,8 +20,6 @@ namespace MeusPlanos.AppServer.Helper
 
             //TODO Adicionar os mapeamentos das classes dos projetos
             //seguindo o modelo dos mapeamentos já adicionadas:
-            services.AddScoped<IWeatherForecastRepositorio, WeatherForecastRepositorio>();
-            services.AddScoped<IWeatherForecastServico, WeatherForecastServico>();
 
             services.AddScoped<IPapelRepositorio, PapelRepositorio>();
             services.AddScoped<IPapelServico, PapelServico>();

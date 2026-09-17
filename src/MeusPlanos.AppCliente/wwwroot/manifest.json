@@ -40,24 +40,6 @@
       "url": "https://itunes.apple.com/app/example-app1/id123456789"
     }
   ],
-  "shortcuts": [
-    {
-      "name": "Nova Temperatura",
-      "description": "Criar uma nova temperatura",
-      "url": "/weatherforecast/incluir",
-      "icons": [
-        {
-          "src": "/img/logoSistema.png",
-          "type": "image/svg+xml",
-          "purpose": "any"
-        }
-      ]
-    },
-    {
-      "name": "Temperaturas",
-      "description": "Visualizar o cadastro de temperaturas do sistema",
-      "url": "/weatherforecast"
-    }
-  ]
+  "shortcuts": []
 
 }

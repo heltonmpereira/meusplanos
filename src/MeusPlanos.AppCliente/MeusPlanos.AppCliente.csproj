@@ -29,4 +29,8 @@
 		<ProjectReference Include="..\MeusPlanos.Definicao\MeusPlanos.Definicao.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Views\Shared\DisplayTemplates\" />
+	</ItemGroup>
+
 </Project>

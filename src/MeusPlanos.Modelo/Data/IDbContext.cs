@@ -22,6 +22,5 @@ namespace MeusPlanos.Modelo.Data
 
         public DbSet<Papel> Papeis { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<WeatherForecast> WeatherForecasts { get; set; }
     }
 }

@@ -28,12 +28,6 @@ namespace MeusPlanos.AppCliente.Refit.Middleware
                     new Uri($"{baseUrlApi}/login"));
 
             services
-                .AddRefitClient<IWeatherForecastRefit>()
-                .AddHttpMessageHandler<AuthorizationMessageHandler>()
-                .ConfigureHttpClient(c => c.BaseAddress =
-                    new Uri($"{baseUrlApi}/weatherforecast"));
-
-            services
                 .AddRefitClient<IUsuarioRefit>()
                 .AddHttpMessageHandler<AuthorizationMessageHandler>()
                 .ConfigureHttpClient(c => c.BaseAddress =
