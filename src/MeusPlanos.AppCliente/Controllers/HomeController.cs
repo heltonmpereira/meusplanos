@@ -6,40 +6,39 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace MeusPlanos.AppCliente.Controllers
+namespace MeusPlanos.AppCliente.Controllers;
+
+[AllowAnonymous]
+public class HomeController(ILogger<HomeController> logger) : PadraoController
 {
-    [AllowAnonymous]
-    public class HomeController(ILogger<HomeController> logger) : PadraoController
+    private readonly ILogger<HomeController> _logger = logger;
+
+    public IActionResult Index()
     {
-        private readonly ILogger<HomeController> _logger = logger;
+        return View();
+    }
 
-        public IActionResult Index()
+    public IActionResult Privacy()
+    {
+        return View();
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        var exceptionHandle = HttpContext.Features
+            .Get<IExceptionHandlerPathFeature>();
+
+        var viewModel = new ErrorViewModel(exceptionHandle)
         {
-            return View();
-        }
+            Caminho = exceptionHandle.Path ?? HttpContext.Request.Path,
+            RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+        };
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            var exceptionHandle = HttpContext.Features
-                .Get<IExceptionHandlerPathFeature>();
-
-            var viewModel = new ErrorViewModel(exceptionHandle)
-            {
-                Caminho = exceptionHandle.Path ?? HttpContext.Request.Path,
-                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
-            };
-
-            _logger.LogError(
-                exception: exceptionHandle.Error,
-                message: "Mensagem de erro: {Mensagem}",
-                viewModel.Mensagem);
-            return View(viewModel);
-        }
+        _logger.LogError(
+            exception: exceptionHandle.Error,
+            message: "Mensagem de erro: {Mensagem}",
+            viewModel.Mensagem);
+        return View(viewModel);
     }
 }

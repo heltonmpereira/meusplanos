@@ -10,25 +10,24 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace MeusPlanos.AppServer.Controllers
+namespace MeusPlanos.AppServer.Controllers;
+
+public class PapelController(IPapelServico servico, IHttpContextAccessor httpContextAccessor) : BaseApiController<Papel, Guid, IPapelServico, IPapelRepositorio>(servico, httpContextAccessor)
 {
-    public class PapelController(IPapelServico servico, IHttpContextAccessor httpContextAccessor) : BaseApiController<Papel, Guid, IPapelServico, IPapelRepositorio>(servico, httpContextAccessor)
+    protected override ICriterio ObterFiltroInicial(string criterioJson)
     {
-        protected override ICriterio ObterFiltroInicial(string criterioJson)
-        {
-            var objFiltro = string.IsNullOrWhiteSpace(criterioJson)
-                ? null
-                : JsonConvert.DeserializeObject<FiltroBase>(criterioJson);
+        var objFiltro = string.IsNullOrWhiteSpace(criterioJson)
+            ? null
+            : JsonConvert.DeserializeObject<FiltroBase>(criterioJson);
 
-            objFiltro?.RenderizarValor();
-            var criterio = objFiltro ?? new FiltroBase();
+        objFiltro?.RenderizarValor();
+        var criterio = objFiltro ?? new FiltroBase();
 
-            return criterio;
-        }
-
-        [HttpPut("atualizar-usuarios")]
-        public async Task<IActionResult> AtualizarUsuariosAsync(Guid id, Guid[] idsUsuario) =>
-            await Servico.RespostaServicoAsync<Papel>(
-                parameters: [id, idsUsuario]);
+        return criterio;
     }
+
+    [HttpPut("atualizar-usuarios")]
+    public async Task<IActionResult> AtualizarUsuariosAsync(Guid id, Guid[] idsUsuario) =>
+        await Servico.RespostaServicoAsync<Papel>(
+            parameters: [id, idsUsuario]);
 }

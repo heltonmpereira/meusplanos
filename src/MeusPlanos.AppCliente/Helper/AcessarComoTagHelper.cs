@@ -1,25 +1,24 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace MeusPlanos.AppCliente.Helper
+namespace MeusPlanos.AppCliente.Helper;
+
+[HtmlTargetElement(Attributes = "asp-acessando-como")]
+public class AcessarComoTagHelper : BaseTagHelper
 {
-    [HtmlTargetElement(Attributes = "asp-acessando-como")]
-    public class AcessarComoTagHelper : BaseTagHelper
+    private readonly string _acessadoVia;
+
+    public AcessarComoTagHelper(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
     {
-        private readonly string _acessadoVia;
+        if (httpContextAccessor.HttpContext == null) return;
+        var user = httpContextAccessor.HttpContext.User;
+        _acessadoVia = user.FindFirst("AcessadoVia").Value;
+    }
 
-        public AcessarComoTagHelper(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
-        {
-            if (httpContextAccessor.HttpContext == null) return;
-            var user = httpContextAccessor.HttpContext.User;
-            _acessadoVia = user.FindFirst("AcessadoVia").Value;
-        }
-
-        public override void Process(TagHelperContext context, TagHelperOutput output)
-        {
-            base.Process(context, output);
-            if (!string.IsNullOrWhiteSpace(_acessadoVia))
-                AdicionarClassDesabilitar(output, "asp-acessando-como");
-        }
+    public override void Process(TagHelperContext context, TagHelperOutput output)
+    {
+        base.Process(context, output);
+        if (!string.IsNullOrWhiteSpace(_acessadoVia))
+            AdicionarClassDesabilitar(output, "asp-acessando-como");
     }
 }

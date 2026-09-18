@@ -2,33 +2,32 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
-namespace MeusPlanos.AppCliente.Attribute
+namespace MeusPlanos.AppCliente.Attribute;
+
+public class HasAtLeastOneNumberAttribute : ValidationAttribute, IClientModelValidator
 {
-    public class HasAtLeastOneNumberAttribute : ValidationAttribute, IClientModelValidator
+    private readonly string _errorMessage;
+    public HasAtLeastOneNumberAttribute()
     {
-        private readonly string _errorMessage;
-        public HasAtLeastOneNumberAttribute()
-        {
 
-            _errorMessage = "A senha deve conter ao menos um número.";
-        }
+        _errorMessage = "A senha deve conter ao menos um número.";
+    }
 
-        public void AddValidation(ClientModelValidationContext context)
-        {
-            if (!context.Attributes.Any(a => a.Key == "data-val"))
-                context.Attributes.Add("data-val", "true");
+    public void AddValidation(ClientModelValidationContext context)
+    {
+        if (!context.Attributes.Any(a => a.Key == "data-val"))
+            context.Attributes.Add("data-val", "true");
 
-            context.Attributes.Add("data-val-passwordnumber", _errorMessage);
-        }
+        context.Attributes.Add("data-val-passwordnumber", _errorMessage);
+    }
 
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            var password = value as string;
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    {
+        var password = value as string;
 
-            if (!password.Any(a => char.IsNumber(a)))
-                return new ValidationResult(_errorMessage);
+        if (!password.Any(a => char.IsNumber(a)))
+            return new ValidationResult(_errorMessage);
 
-            return ValidationResult.Success;
-        }
+        return ValidationResult.Success;
     }
 }

@@ -1,8 +1,7 @@
-﻿namespace MeusPlanos.Definicao.Modelo.Usuario
+﻿namespace MeusPlanos.Definicao.Modelo.Usuario;
+
+public class UsuarioSolicitacaoRedefinicaoSenha
 {
-    public class UsuarioSolicitacaoRedefinicaoSenha
-    {
-        public string Email { get; set; }
-        public string Username { get; set; }
-    }
+    public string Email { get; set; }
+    public string Username { get; set; }
 }

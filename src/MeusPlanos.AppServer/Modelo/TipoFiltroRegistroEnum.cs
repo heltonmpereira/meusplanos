@@ -1,10 +1,9 @@
-﻿namespace MeusPlanos.AppServer.Modelo
-{
+﻿namespace MeusPlanos.AppServer.Modelo;
 
-    public enum TipoFiltroRegistroEnum
-    {
-        NaoFiltrarUsuario,
-        FiltrarPorUsuarioLogado,
-        FiltrarPorUsuarioLogadoOuSemUsuarioEspecificado
-    }
+
+public enum TipoFiltroRegistroEnum
+{
+    NaoFiltrarUsuario,
+    FiltrarPorUsuarioLogado,
+    FiltrarPorUsuarioLogadoOuSemUsuarioEspecificado
 }

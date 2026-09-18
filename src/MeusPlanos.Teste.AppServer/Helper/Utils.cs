@@ -7,69 +7,68 @@ using MeusPlanos.Definicao.Modelo;
 using MeusPlanos.Definicao.Modelo.Usuario;
 using Newtonsoft.Json;
 
-namespace MeusPlanos.Teste.AppServer.Helper
+namespace MeusPlanos.Teste.AppServer.Helper;
+
+public static class Utils
 {
-    public static class Utils
+    private static StringContent PrepararChamada(this HttpClient client, object parameter, string token = null)
     {
-        private static StringContent PrepararChamada(this HttpClient client, object parameter, string token = null)
+        if (!string.IsNullOrWhiteSpace(token))
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        return new StringContent(
+            JsonConvert.SerializeObject(parameter),
+            Encoding.Default,
+            "application/json");
+    }
+    public static async Task<T> ProcessarRetorno<T>(this HttpResponseMessage resposta)
+    {
+        var stringResponse = await resposta.Content.ReadAsStringAsync();
+        JsonSerializerOptions options = new()
         {
-            if (!string.IsNullOrWhiteSpace(token))
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        }; ;
+        var retorno = System.Text.Json.JsonSerializer.Deserialize<T>(stringResponse, options);
 
-            return new StringContent(
-                JsonConvert.SerializeObject(parameter),
-                Encoding.Default,
-                "application/json");
-        }
-        public static async Task<T> ProcessarRetorno<T>(this HttpResponseMessage resposta)
-        {
-            var stringResponse = await resposta.Content.ReadAsStringAsync();
-            JsonSerializerOptions options = new()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            }; ;
-            var retorno = System.Text.Json.JsonSerializer.Deserialize<T>(stringResponse, options);
+        return retorno;
+    }
 
-            return retorno;
-        }
+    public static async Task<RespostaPaginadaServico<T>> EnviarGetAsync<T>(this HttpClient client, string rota, string token = null)
+    {
+        if (!string.IsNullOrWhiteSpace(token))
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        public static async Task<RespostaPaginadaServico<T>> EnviarGetAsync<T>(this HttpClient client, string rota, string token = null)
-        {
-            if (!string.IsNullOrWhiteSpace(token))
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        var resposta = await client.GetAsync(rota);
+        return await resposta.ProcessarRetorno<RespostaPaginadaServico<T>>();
+    }
+    public static async Task<RespostaServico<T>> EnviarDeleteAsync<T>(this HttpClient client, string rota, string token = null)
+    {
+        if (!string.IsNullOrWhiteSpace(token))
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            var resposta = await client.GetAsync(rota);
-            return await resposta.ProcessarRetorno<RespostaPaginadaServico<T>>();
-        }
-        public static async Task<RespostaServico<T>> EnviarDeleteAsync<T>(this HttpClient client, string rota, string token = null)
-        {
-            if (!string.IsNullOrWhiteSpace(token))
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        var resposta = await client.DeleteAsync(rota);
+        return await resposta.ProcessarRetorno<RespostaServico<T>>();
+    }
+    public static async Task<RespostaServico<T>> EnviarPostAsync<T>(this HttpClient client, string rota, object parameter, string token = null)
+    {
+        var content = client.PrepararChamada(parameter, token);
+        var resposta = await client.PostAsync(rota, content);
+        return await resposta.ProcessarRetorno<RespostaServico<T>>();
+    }
+    public static async Task<RespostaServico<T>> EnviarPutAsync<T>(this HttpClient client, string rota, object parameter, string token = null)
+    {
+        var content = client.PrepararChamada(parameter, token);
+        var resposta = await client.PutAsync(rota, content);
+        return await resposta.ProcessarRetorno<RespostaServico<T>>();
+    }
 
-            var resposta = await client.DeleteAsync(rota);
-            return await resposta.ProcessarRetorno<RespostaServico<T>>();
-        }
-        public static async Task<RespostaServico<T>> EnviarPostAsync<T>(this HttpClient client, string rota, object parameter, string token = null)
-        {
-            var content = client.PrepararChamada(parameter, token);
-            var resposta = await client.PostAsync(rota, content);
-            return await resposta.ProcessarRetorno<RespostaServico<T>>();
-        }
-        public static async Task<RespostaServico<T>> EnviarPutAsync<T>(this HttpClient client, string rota, object parameter, string token = null)
-        {
-            var content = client.PrepararChamada(parameter, token);
-            var resposta = await client.PutAsync(rota, content);
-            return await resposta.ProcessarRetorno<RespostaServico<T>>();
-        }
+    public static async Task<string> ObterTokenLogin(this HttpClient client, string usuario, string senha)
+    {
+        var login = new UsuarioLogin() { Username = usuario, Password = senha };
 
-        public static async Task<string> ObterTokenLogin(this HttpClient client, string usuario, string senha)
-        {
-            var login = new UsuarioLogin() { Username = usuario, Password = senha };
+        var rota = "/api/login";
+        var retorno = await client.EnviarPostAsync<UsuarioToken>(rota, login);
 
-            var rota = "/api/login";
-            var retorno = await client.EnviarPostAsync<UsuarioToken>(rota, login);
-
-            return retorno.Dados?.TokenAcesso;
-        }
+        return retorno.Dados?.TokenAcesso;
     }
 }

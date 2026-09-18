@@ -2,33 +2,32 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
-namespace MeusPlanos.AppCliente.Attribute
+namespace MeusPlanos.AppCliente.Attribute;
+
+public class HasAtLeastOneLowerCaseLetterAttribute : ValidationAttribute, IClientModelValidator
 {
-    public class HasAtLeastOneLowerCaseLetterAttribute : ValidationAttribute, IClientModelValidator
+    private readonly string _errorMessage;
+    public HasAtLeastOneLowerCaseLetterAttribute()
     {
-        private readonly string _errorMessage;
-        public HasAtLeastOneLowerCaseLetterAttribute()
-        {
 
-            _errorMessage = "A senha deve conter ao menos uma letra minúscula.";
-        }
+        _errorMessage = "A senha deve conter ao menos uma letra minúscula.";
+    }
 
-        public void AddValidation(ClientModelValidationContext context)
-        {
-            if (!context.Attributes.Any(a => a.Key == "data-val"))
-                context.Attributes.Add("data-val", "true");
+    public void AddValidation(ClientModelValidationContext context)
+    {
+        if (!context.Attributes.Any(a => a.Key == "data-val"))
+            context.Attributes.Add("data-val", "true");
 
-            context.Attributes.Add("data-val-passwordlowercase", _errorMessage);
-        }
+        context.Attributes.Add("data-val-passwordlowercase", _errorMessage);
+    }
 
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            var password = value as string;
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    {
+        var password = value as string;
 
-            if (!password.Any(a => char.IsLower(a)))
-                return new ValidationResult(_errorMessage);
+        if (!password.Any(a => char.IsLower(a)))
+            return new ValidationResult(_errorMessage);
 
-            return ValidationResult.Success;
-        }
+        return ValidationResult.Success;
     }
 }

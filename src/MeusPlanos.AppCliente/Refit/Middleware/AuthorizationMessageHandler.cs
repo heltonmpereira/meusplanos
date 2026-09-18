@@ -5,20 +5,19 @@ using System.Threading.Tasks;
 using MeusPlanos.AppCliente.Helper;
 using Microsoft.AspNetCore.Http;
 
-namespace MeusPlanos.AppCliente.Refit.Middleware
+namespace MeusPlanos.AppCliente.Refit.Middleware;
+
+public class AuthorizationMessageHandler(IHttpContextAccessor httpContext) : DelegatingHandler
 {
-    public class AuthorizationMessageHandler(IHttpContextAccessor httpContext) : DelegatingHandler
+    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            if (!httpContext.HttpContext.Request.Cookies.ContainsKey(Constante.NOME_COOKIE_BEARER))
-                return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
-
-            request.Headers.Authorization = new AuthenticationHeaderValue(
-                "Bearer",
-                httpContext.HttpContext.Request.Cookies[Constante.NOME_COOKIE_BEARER]);
-
+        if (!httpContext.HttpContext.Request.Cookies.ContainsKey(Constante.NOME_COOKIE_BEARER))
             return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
-        }
+
+        request.Headers.Authorization = new AuthenticationHeaderValue(
+            "Bearer",
+            httpContext.HttpContext.Request.Cookies[Constante.NOME_COOKIE_BEARER]);
+
+        return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
     }
 }

@@ -6,22 +6,21 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 
-namespace MeusPlanos.Teste.AppServer.Base
-{
-    public class MeusPlanosWebApplicationFactory : WebApplicationFactory<Startup>
-    {
-        public MeusPlanosWebApplicationFactory()
-        {
-            LocalDb.ApagarECriarLocalDb("MeusPlanosTesteDB");
-        }
+namespace MeusPlanos.Teste.AppServer.Base;
 
-        protected override void ConfigureWebHost(IWebHostBuilder builder)
+public class MeusPlanosWebApplicationFactory : WebApplicationFactory<Startup>
+{
+    public MeusPlanosWebApplicationFactory()
+    {
+        LocalDb.ApagarECriarLocalDb("MeusPlanosTesteDB");
+    }
+
+    protected override void ConfigureWebHost(IWebHostBuilder builder)
+    {
+        builder.ConfigureAppConfiguration(cfg =>
         {
-            builder.ConfigureAppConfiguration(cfg =>
-            {
-                cfg.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
-                cfg.AddJsonFile("appSettingsTest.json", false);
-            });
-        }
+            cfg.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
+            cfg.AddJsonFile("appSettingsTest.json", false);
+        });
     }
 }

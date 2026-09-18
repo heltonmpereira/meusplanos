@@ -3,9 +3,8 @@ using MeusPlanos.Definicao.Entidade;
 using MeusPlanos.Definicao.Interface.Repositorio;
 using MeusPlanos.Definicao.Interface.Servico.Base;
 
-namespace MeusPlanos.Definicao.Interface.Servico
+namespace MeusPlanos.Definicao.Interface.Servico;
+
+public interface IUsuarioServico : IServico<Usuario, Guid, IUsuarioRepositorio>
 {
-    public interface IUsuarioServico : IServico<Usuario, Guid, IUsuarioRepositorio>
-    {
-    }
 }

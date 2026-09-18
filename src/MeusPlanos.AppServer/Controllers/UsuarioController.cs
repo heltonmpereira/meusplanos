@@ -10,26 +10,25 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace MeusPlanos.AppServer.Controllers
+namespace MeusPlanos.AppServer.Controllers;
+
+public class UsuarioController(IUsuarioServico servico, IHttpContextAccessor httpContextAccessor) : BaseApiController<Usuario, Guid, IUsuarioServico, IUsuarioRepositorio>(servico, httpContextAccessor)
 {
-    public class UsuarioController(IUsuarioServico servico, IHttpContextAccessor httpContextAccessor) : BaseApiController<Usuario, Guid, IUsuarioServico, IUsuarioRepositorio>(servico, httpContextAccessor)
+    protected override ICriterio ObterFiltroInicial(string criterioJson)
     {
-        protected override ICriterio ObterFiltroInicial(string criterioJson)
-        {
-            var objFiltro = string.IsNullOrWhiteSpace(criterioJson)
-                ? null
-                : JsonConvert.DeserializeObject<FiltroBase>(criterioJson);
+        var objFiltro = string.IsNullOrWhiteSpace(criterioJson)
+            ? null
+            : JsonConvert.DeserializeObject<FiltroBase>(criterioJson);
 
-            objFiltro?.RenderizarValor();
-            var criterio = objFiltro ?? new FiltroBase();
+        objFiltro?.RenderizarValor();
+        var criterio = objFiltro ?? new FiltroBase();
 
-            return criterio;
-        }
+        return criterio;
+    }
 
-        public override Task<IActionResult> IncluirAsync(Usuario item)
-        {
-            item.PasswordHash = item.PasswordHash.CriptografarTexto();
-            return base.IncluirAsync(item);
-        }
+    public override Task<IActionResult> IncluirAsync(Usuario item)
+    {
+        item.PasswordHash = item.PasswordHash.CriptografarTexto();
+        return base.IncluirAsync(item);
     }
 }

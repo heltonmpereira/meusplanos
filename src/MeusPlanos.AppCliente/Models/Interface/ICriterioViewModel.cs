@@ -2,18 +2,17 @@
 using Dhani.Utilitarios.Filtro;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace MeusPlanos.AppCliente.Models.Interface
-{
-    public interface ICriterioViewModel
-    {
-        int PaginaAtual { get; set; }
-        public int ItensPorPagina { get; set; }
-        public string Ordenacao { get; set; }
-        FiltroOpcao FiltroAtual { get; set; }
-        List<GrupoFiltro> GruposFiltro { get; set; }
-        List<SelectListItem> Colunas { get; set; }
+namespace MeusPlanos.AppCliente.Models.Interface;
 
-        string FiltroJson { get; }
-        string MetaDados { get; set; }
-    }
+public interface ICriterioViewModel
+{
+    int PaginaAtual { get; set; }
+    public int ItensPorPagina { get; set; }
+    public string Ordenacao { get; set; }
+    FiltroOpcao FiltroAtual { get; set; }
+    List<GrupoFiltro> GruposFiltro { get; set; }
+    List<SelectListItem> Colunas { get; set; }
+
+    string FiltroJson { get; }
+    string MetaDados { get; set; }
 }
