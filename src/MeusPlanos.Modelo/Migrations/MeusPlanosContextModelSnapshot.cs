@@ -29,22 +29,16 @@ namespace MeusPlanos.Modelo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DataAlteracao")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("DataAlteracao")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataCadastro")
+                    b.Property<DateTimeOffset>("DataCriacao")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
+                        .HasColumnType("datetimeoffset")
                         .HasDefaultValueSql("getdate()");
 
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataDelecao")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("DataDelecao")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -66,19 +60,13 @@ namespace MeusPlanos.Modelo.Migrations
                         new
                         {
                             Id = new Guid("7e0a9201-f672-11ed-9ae1-0fc4e648d876"),
-                            DataAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataCadastro = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataCriacao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataDelecao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataCriacao = new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, -3, 0, 0, 0)),
                             Nome = "Admin"
                         },
                         new
                         {
                             Id = new Guid("7e0a9202-f672-11ed-9ae1-0fc4e648d876"),
-                            DataAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataCadastro = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataCriacao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataDelecao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataCriacao = new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, -3, 0, 0, 0)),
                             Nome = "SuperAdmin"
                         });
                 });
@@ -89,17 +77,19 @@ namespace MeusPlanos.Modelo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DataAlteracao")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("DataAlteracao")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<DateOnly>("DataAlvo")
                         .HasColumnType("date");
 
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("DataCriacao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetimeoffset")
+                        .HasDefaultValueSql("getdate()");
 
-                    b.Property<DateTime>("DataDelecao")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("DataDelecao")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Moeda")
                         .HasColumnType("nvarchar(max)");
@@ -131,22 +121,16 @@ namespace MeusPlanos.Modelo.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTime>("DataAlteracao")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("DataAlteracao")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataCadastro")
+                    b.Property<DateTimeOffset>("DataCriacao")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
+                        .HasColumnType("datetimeoffset")
                         .HasDefaultValueSql("getdate()");
 
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataDelecao")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("DataDelecao")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -187,10 +171,7 @@ namespace MeusPlanos.Modelo.Migrations
                         new
                         {
                             Id = new Guid("7e0a9200-f672-11ed-9ae1-0fc4e648d876"),
-                            DataAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataCadastro = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataCriacao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataDelecao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataCriacao = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             Email = "admin@admin.com",
                             Nome = "Administrador",
                             PasswordHash = "AITMdMEsqiixw35g6qbq+zbaYM2HttO8uXFdJSg96xVnUn2AatqTCDcKqSVPlbzulA==",
@@ -205,16 +186,16 @@ namespace MeusPlanos.Modelo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DataAlteracao")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("DataAlteracao")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime>("DataCriacao")
+                    b.Property<DateTimeOffset>("DataCriacao")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
+                        .HasColumnType("datetimeoffset")
                         .HasDefaultValueSql("getdate()");
 
-                    b.Property<DateTime>("DataDelecao")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("DataDelecao")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid>("PapelId")
                         .HasColumnType("uniqueidentifier");
@@ -234,18 +215,14 @@ namespace MeusPlanos.Modelo.Migrations
                         new
                         {
                             Id = new Guid("7e0a9203-f672-11ed-9ae1-0fc4e648d876"),
-                            DataAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataCriacao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataDelecao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataCriacao = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             PapelId = new Guid("7e0a9201-f672-11ed-9ae1-0fc4e648d876"),
                             UsuarioId = new Guid("7e0a9200-f672-11ed-9ae1-0fc4e648d876")
                         },
                         new
                         {
                             Id = new Guid("7e0a9204-f672-11ed-9ae1-0fc4e648d876"),
-                            DataAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataCriacao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataDelecao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataCriacao = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             PapelId = new Guid("7e0a9202-f672-11ed-9ae1-0fc4e648d876"),
                             UsuarioId = new Guid("7e0a9200-f672-11ed-9ae1-0fc4e648d876")
                         });

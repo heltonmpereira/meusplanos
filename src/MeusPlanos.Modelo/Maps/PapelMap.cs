@@ -14,7 +14,7 @@ public class PapelMap : BaseMap<Papel, Guid>
 
         builder.Property(p => p.Nome).HasMaxLength(50).IsRequired();
         builder.Property(p => p.Observacao).HasMaxLength(500);
-        builder.Property(p => p.DataCadastro).HasDefaultValueSql("getdate()");
+        builder.Property(p => p.DataCriacao).HasDefaultValueSql("getdate()");
 
         builder.HasIndex(p => p.Nome).IsUnique();
 
@@ -29,13 +29,13 @@ public class PapelMap : BaseMap<Papel, Guid>
             {
                 Id = Guid.Parse("7e0a9201-f672-11ed-9ae1-0fc4e648d876"),
                 Nome = "Admin",
-                DataCadastro = new DateTime(2023, 1, 1, 0, 0, 0)
+                DataCriacao = new DateTime(2023, 1, 1, 0, 0, 0)
             },
             new Papel
             {
                 Id = Guid.Parse("7e0a9202-f672-11ed-9ae1-0fc4e648d876"),
                 Nome = "SuperAdmin",
-                DataCadastro = new DateTime(2023, 1, 1, 0, 0, 0)
+                DataCriacao = new DateTime(2023, 1, 1, 0, 0, 0)
             }
         };
 

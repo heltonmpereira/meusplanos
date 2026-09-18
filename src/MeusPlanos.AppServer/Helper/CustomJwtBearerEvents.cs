@@ -51,8 +51,8 @@ public class CustomJwtBearerEvents : JwtBearerEvents
 
             // Comparar a data de atualização do token com a data atual do usuário
             if (DateTime.TryParse(dataAtualizacaoClaim.Value, out var dataToken) &&
-                usuarioAtual.DataAtualizacao.HasValue &&
-                dataToken < usuarioAtual.DataAtualizacao.Value)
+                usuarioAtual.DataAlteracao.HasValue &&
+                dataToken < usuarioAtual.DataAlteracao.Value)
             {
                 context.Fail("Token expirado devido a alterações no usuário");
                 return;

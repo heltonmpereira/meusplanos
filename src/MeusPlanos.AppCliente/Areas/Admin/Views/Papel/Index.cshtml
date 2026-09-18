@@ -40,10 +40,10 @@ else if (Model != null && Model.Itens != null && Model.Itens.Any())
                         <asp-cabecalho asp-for="Itens.FirstOrDefault().Nome" />
                     </th>
                     <th>
-                        <asp-cabecalho asp-for="Itens.FirstOrDefault().DataCadastro" />
+                        <asp-cabecalho asp-for="Itens.FirstOrDefault().DataCriacao" />
                     </th>
                     <th>
-                        <asp-cabecalho asp-for="Itens.FirstOrDefault().DataAtualizacao" />
+                        <asp-cabecalho asp-for="Itens.FirstOrDefault().DataAlteracao" />
                     </th>
                     <th colspan="3">Ações</th>
                 </tr>
@@ -56,10 +56,10 @@ else if (Model != null && Model.Itens != null && Model.Itens.Any())
                             @Html.DisplayFor(modelItem => item.Nome)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DataCadastro)
+                            @Html.DisplayFor(modelItem => item.DataCriacao)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DataAtualizacao)
+                            @Html.DisplayFor(modelItem => item.DataAlteracao)
                         </td>
 
                         <td class="p-2 align-content-center w150px">

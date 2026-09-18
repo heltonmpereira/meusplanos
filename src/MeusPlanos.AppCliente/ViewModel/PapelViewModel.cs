@@ -12,13 +12,11 @@ public class PapelViewModel : BaseViewModel, IEntidade<Guid>
     public Guid Id { get; set; }
     public string Nome { get; set; }
     public string Observacao { get; set; }
-    public DateTime DataCadastro { get; set; }
-    public DateTime? DataAtualizacao { get; set; }
     public List<SelectListItem> UsuariosSelecionados { get; set; }
 
-    public DateTime DataCriacao { get; set; }
-    public DateTime DataAlteracao { get; set; }
-    public DateTime DataDelecao { get; set; }
+    public DateTimeOffset DataCriacao { get; set; }
+    public DateTimeOffset? DataAlteracao { get; set; }
+    public DateTimeOffset? DataDelecao { get; set; }
 
     private ICollection<UsuarioPapelViewModel> _usuarios;
     public ICollection<UsuarioPapelViewModel> Usuarios

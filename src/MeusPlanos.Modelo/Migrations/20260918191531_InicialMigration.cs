@@ -20,11 +20,9 @@ namespace MeusPlanos.Modelo.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Observacao = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataDelecao = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DataCriacao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false, defaultValueSql: "getdate()"),
+                    DataAlteracao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    DataDelecao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,9 +40,9 @@ namespace MeusPlanos.Modelo.Migrations
                     DataAlvo = table.Column<DateOnly>(type: "date", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Moeda = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataDelecao = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DataCriacao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false, defaultValueSql: "getdate()"),
+                    DataAlteracao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    DataDelecao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,12 +59,10 @@ namespace MeusPlanos.Modelo.Migrations
                     Email = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CodigoRedefinicaoSenha = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataDelecao = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DataCriacao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false, defaultValueSql: "getdate()"),
+                    DataAlteracao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    DataDelecao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -80,9 +76,9 @@ namespace MeusPlanos.Modelo.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PapelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
-                    DataAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataDelecao = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DataCriacao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false, defaultValueSql: "getdate()"),
+                    DataAlteracao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    DataDelecao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -103,25 +99,25 @@ namespace MeusPlanos.Modelo.Migrations
 
             migrationBuilder.InsertData(
                 table: "Papel",
-                columns: new[] { "Id", "DataAlteracao", "DataAtualizacao", "DataCadastro", "DataCriacao", "DataDelecao", "Nome", "Observacao" },
+                columns: new[] { "Id", "DataAlteracao", "DataCriacao", "DataDelecao", "Nome", "Observacao" },
                 values: new object[,]
                 {
-                    { new Guid("7e0a9201-f672-11ed-9ae1-0fc4e648d876"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Admin", null },
-                    { new Guid("7e0a9202-f672-11ed-9ae1-0fc4e648d876"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "SuperAdmin", null }
+                    { new Guid("7e0a9201-f672-11ed-9ae1-0fc4e648d876"), null, new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, -3, 0, 0, 0)), null, "Admin", null },
+                    { new Guid("7e0a9202-f672-11ed-9ae1-0fc4e648d876"), null, new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, -3, 0, 0, 0)), null, "SuperAdmin", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "Usuario",
-                columns: new[] { "Id", "CodigoRedefinicaoSenha", "DataAlteracao", "DataAtualizacao", "DataCadastro", "DataCriacao", "DataDelecao", "Email", "Nome", "PasswordHash", "Sobrenome", "Username" },
-                values: new object[] { new Guid("7e0a9200-f672-11ed-9ae1-0fc4e648d876"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", "Administrador", "AITMdMEsqiixw35g6qbq+zbaYM2HttO8uXFdJSg96xVnUn2AatqTCDcKqSVPlbzulA==", "do Sistema", "admin" });
+                columns: new[] { "Id", "CodigoRedefinicaoSenha", "DataAlteracao", "DataDelecao", "Email", "Nome", "PasswordHash", "Sobrenome", "Username" },
+                values: new object[] { new Guid("7e0a9200-f672-11ed-9ae1-0fc4e648d876"), null, null, null, "admin@admin.com", "Administrador", "AITMdMEsqiixw35g6qbq+zbaYM2HttO8uXFdJSg96xVnUn2AatqTCDcKqSVPlbzulA==", "do Sistema", "admin" });
 
             migrationBuilder.InsertData(
                 table: "UsuarioPapel",
                 columns: new[] { "Id", "DataAlteracao", "DataDelecao", "PapelId", "UsuarioId" },
                 values: new object[,]
                 {
-                    { new Guid("7e0a9203-f672-11ed-9ae1-0fc4e648d876"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("7e0a9201-f672-11ed-9ae1-0fc4e648d876"), new Guid("7e0a9200-f672-11ed-9ae1-0fc4e648d876") },
-                    { new Guid("7e0a9204-f672-11ed-9ae1-0fc4e648d876"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("7e0a9202-f672-11ed-9ae1-0fc4e648d876"), new Guid("7e0a9200-f672-11ed-9ae1-0fc4e648d876") }
+                    { new Guid("7e0a9203-f672-11ed-9ae1-0fc4e648d876"), null, null, new Guid("7e0a9201-f672-11ed-9ae1-0fc4e648d876"), new Guid("7e0a9200-f672-11ed-9ae1-0fc4e648d876") },
+                    { new Guid("7e0a9204-f672-11ed-9ae1-0fc4e648d876"), null, null, new Guid("7e0a9202-f672-11ed-9ae1-0fc4e648d876"), new Guid("7e0a9200-f672-11ed-9ae1-0fc4e648d876") }
                 });
 
             migrationBuilder.CreateIndex(

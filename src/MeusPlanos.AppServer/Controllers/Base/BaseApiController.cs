@@ -38,7 +38,7 @@ public abstract class BaseApiController<TEntidade, TPK, TServico, TRepositorio>(
                 RelacaoOutrosGrupos = TipoOperadorLogico.And
             };
 
-            filtroInicial.AdicionarGrupo(grupoRegistrosDeletados);
+            //filtroInicial.AdicionarGrupo(grupoRegistrosDeletados);
         }
 
         return await Servico.RespostaPaginadaServicoAsync<TEntidade>(

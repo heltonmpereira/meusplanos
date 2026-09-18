@@ -34,10 +34,10 @@ public class UsuarioViewModel : BaseViewModel, IEntidade<Guid>
     public string PasswordHash { get; set; }
 
     [DisplayName("Cadastro")]
-    public DateTime DataCriacao { get; set; }
+    public DateTimeOffset DataCriacao { get; set; }
     [DisplayName("Alteração")]
-    public DateTime DataAlteracao { get; set; }
-    public DateTime DataDelecao { get; set; }
+    public DateTimeOffset? DataAlteracao { get; set; }
+    public DateTimeOffset? DataDelecao { get; set; }
 
     [DisplayName("Nome")]
     public string NomeCompleto => $"{Nome} {Sobrenome}";

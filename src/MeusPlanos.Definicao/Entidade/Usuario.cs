@@ -12,13 +12,11 @@ public class Usuario : IEntidade<Guid>
     public string Email { get; set; }
     public string Username { get; set; }
     public string PasswordHash { get; set; }
-    public DateTime DataCadastro { get; set; }
-    public DateTime? DataAtualizacao { get; set; }
     public string CodigoRedefinicaoSenha { get; set; }
 
-    public DateTime DataCriacao { get; set; }
-    public DateTime DataAlteracao { get; set; }
-    public DateTime DataDelecao { get; set; }
+    public DateTimeOffset DataCriacao { get; set; }
+    public DateTimeOffset? DataAlteracao { get; set; }
+    public DateTimeOffset? DataDelecao { get; set; }
 
     public ICollection<UsuarioPapel> Papeis { get; set; }
 }

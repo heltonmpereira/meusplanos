@@ -17,7 +17,7 @@ public class UsuarioMap : BaseMap<Usuario, Guid>
         builder.Property(p => p.Email).HasMaxLength(150).IsRequired();
         builder.Property(p => p.Username).HasMaxLength(50).IsRequired();
         builder.Property(p => p.PasswordHash).HasMaxLength(200).IsRequired();
-        builder.Property(p => p.DataCadastro).HasDefaultValueSql("getdate()");
+        builder.Property(p => p.DataCriacao).HasDefaultValueSql("getdate()");
 
         builder.Property(p => p.CodigoRedefinicaoSenha).HasMaxLength(200);
 
@@ -36,8 +36,7 @@ public class UsuarioMap : BaseMap<Usuario, Guid>
                 Sobrenome = "do Sistema",
                 Username = "admin",
                 Email = "admin@admin.com",
-                PasswordHash = "AITMdMEsqiixw35g6qbq+zbaYM2HttO8uXFdJSg96xVnUn2AatqTCDcKqSVPlbzulA==",
-                DataCadastro = new DateTime(2023, 1, 1, 0, 0, 0)
+                PasswordHash = "AITMdMEsqiixw35g6qbq+zbaYM2HttO8uXFdJSg96xVnUn2AatqTCDcKqSVPlbzulA=="
             }
         };
 
