@@ -34,17 +34,15 @@ public class UsuarioViewModel : BaseViewModel, IEntidade<Guid>
     public string PasswordHash { get; set; }
 
     [DisplayName("Cadastro")]
-    public DateTime DataCadastro { get; set; }
-
+    public DateTime DataCriacao { get; set; }
     [DisplayName("Alteração")]
-    public DateTime? DataAtualizacao { get; set; }
+    public DateTime DataAlteracao { get; set; }
+    public DateTime DataDelecao { get; set; }
 
     [DisplayName("Nome")]
     public string NomeCompleto => $"{Nome} {Sobrenome}";
 
     public string CodigoRedefinicaoSenha { get; set; }
-
-    public bool Deletado { get; set; }
 
     public ICollection<UsuarioPapelViewModel> Papeis { get; set; }
 }

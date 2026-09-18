@@ -1,0 +1,22 @@
+﻿
+@model MeusPlanos.AppCliente.ViewModel.PlanoViewModel
+
+@{
+    ViewData["Title"] = "Plano";
+    ViewData["Icone"] = "<i class='fa fa-home fa-lg text-primary'></i>";
+
+    @section Scripts {
+        @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+}
+
+<div class="col-11 px-sm-3 px-md-0 pt-4 mx-auto">
+    <h1>Detalhes</h1>
+
+    @Html.DisplayFor(model => model)
+
+    <hr />
+    <a class="btn @(ViewBag.ClasseBotao)secondary" asp-action="Index">Voltar</a>
+</div>

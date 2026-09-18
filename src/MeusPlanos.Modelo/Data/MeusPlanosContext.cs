@@ -130,5 +130,6 @@ public class MeusPlanosContext(DbContextOptions options) : DbContext(options), I
     }
 
     public DbSet<Papel> Papeis { get; set; }
+		public DbSet<Plano> Planos { get; set; }
     public DbSet<Usuario> Usuarios { get; set; }
 }

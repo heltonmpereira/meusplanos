@@ -39,6 +39,13 @@ public static class ClienteRefitMiddleware
             .ConfigureHttpClient(c => c.BaseAddress =
                 new Uri($"{baseUrlApi}/Papel"));
 
+			services
+                .AddRefitClient<IPlanoRefit>()
+                .AddHttpMessageHandler<AuthorizationMessageHandler>()
+                //.ConfigurePrimaryHttpMessageHandler(() => primaryHttpMessageHandler)
+                .ConfigureHttpClient(c => c.BaseAddress =
+                    new Uri($"{baseUrlApi}/Plano")); 
+
         return services;
     }
 }

@@ -1,0 +1,57 @@
+﻿
+@model MeusPlanos.AppCliente.ViewModel.PlanoViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<div class="row">
+    <div class="form-group col-sm-6">
+        <label asp-for="Nome" class="control-label"></label>
+        <input asp-for="Nome" class="form-control"/>
+        <span asp-validation-for="Nome" class="text-danger"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-sm-6">
+        <label asp-for="Tipo" class="control-label"></label>
+        <input asp-for="Tipo" class="form-control"/>
+        <span asp-validation-for="Tipo" class="text-danger"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-sm-6">
+        <label asp-for="ValorEstimadoManual" class="control-label"></label>
+        <input asp-for="ValorEstimadoManual" class="form-control"/>
+        <span asp-validation-for="ValorEstimadoManual" class="text-danger"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-sm-6">
+        <label asp-for="DataAlvo" class="control-label"></label>
+        <input asp-for="DataAlvo" class="form-control"/>
+        <span asp-validation-for="DataAlvo" class="text-danger"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-sm-6">
+        <label asp-for="Status" class="control-label"></label>
+        <input asp-for="Status" class="form-control"/>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-sm-6">
+        <label asp-for="Moeda" class="control-label"></label>
+        <input asp-for="Moeda" class="form-control"/>
+        <span asp-validation-for="Moeda" class="text-danger"></span>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="form-group">
+        <hr />
+        <input asp-acessando-como type="submit" value="Salvar" class="btn btn-primary" />
+
+        <a class="btn @(ViewBag.ClasseBotao)secondary" asp-action="Index">Voltar</a>
+    </div>
+</div>

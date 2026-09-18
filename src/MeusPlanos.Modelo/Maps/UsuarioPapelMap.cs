@@ -12,7 +12,7 @@ public class UsuarioPapelMap : BaseMap<UsuarioPapel, Guid>
     {
         base.Configure(builder);
 
-        builder.Property(p => p.DataCadastro).HasDefaultValueSql("getdate()");
+        builder.Property(p => p.DataCriacao).HasDefaultValueSql("getdate()");
 
         builder
             .HasOne(o => o.Usuario)

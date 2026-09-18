@@ -1,13 +1,14 @@
 ﻿@using MeusPlanos.AppCliente.Models.Interface;
-@model ListaBaseViewModel<UsuarioViewModel>
+@model ListaBaseViewModel<PlanoViewModel>
 
 @{
-    ViewData["Title"] = "Usuários";
-    ViewData["Icone"] = "<i class='fa fa-lg fa-user'></i>";
+    ViewData["Title"] = "Plano";
+    ViewData["Icone"] = "<i class='fa fa-lg fa-home'></i>";
     ViewData["LinkNovo"] = Url.Action("Incluir");
 
     var filtro = Model == null ? null : Model.FiltroViewModel;
     await Html.RenderPartialAsync("_PartialFiltro", filtro);
+
     @section Scripts {
         <script nws-csp-add-nonce="true" asp-append-version="true" src="~/js/views/paginacao.js"></script>
         <script nws-csp-add-nonce="true" asp-append-version="true" type="text/javascript">
@@ -24,12 +25,13 @@
 @if ((ViewBag?.RetornoApi == null || ViewBag?.RetornoApi.BemSucedido) && (Model == null || !Model.Itens.Any()))
 {
     await Html.RenderPartialAsync(
-    "_PartialAlertaVazio",
-    new Tuple<ICriterioViewModel, string, object>(filtro, "Usuários", null));
+        "_PartialAlertaVazio",
+        new Tuple<ICriterioViewModel, string, object>(filtro, "Plano", null));
 }
 else if (Model != null && Model.Itens != null && Model.Itens.Any())
 {
     var tableTheme = $"table-{ViewBag.Theme}";
+    var ordenacao = Model?.Filtro?.Ordenacao ?? string.Empty;
     var classBotao = ViewBag.Theme == "dark" ? string.Empty : "-outline";
 
     <div class="table-responsive col-11 px-sm-3 px-md-0 pt-4 mx-auto">
@@ -37,23 +39,24 @@ else if (Model != null && Model.Itens != null && Model.Itens.Any())
             <thead class="table-primary">
                 <tr>
                     <th>
-                        <asp-cabecalho campo="Nome;Sobrenome" titulo="Nome" />
+                        <asp-cabecalho asp-for="Itens.FirstOrDefault().Nome"/>
                     </th>
                     <th>
-                        <asp-cabecalho asp-for="Itens.FirstOrDefault().Email" />
+                        <asp-cabecalho asp-for="Itens.FirstOrDefault().Tipo"/>
                     </th>
                     <th>
-                        <asp-cabecalho asp-for="Itens.FirstOrDefault().Username" />
+                        <asp-cabecalho asp-for="Itens.FirstOrDefault().ValorEstimadoManual"/>
                     </th>
                     <th>
-                        <asp-cabecalho asp-for="Itens.FirstOrDefault().DataCriacao" />
+                        <asp-cabecalho asp-for="Itens.FirstOrDefault().DataAlvo"/>
                     </th>
                     <th>
-                        <asp-cabecalho asp-for="Itens.FirstOrDefault().DataAlteracao" />
+                        <asp-cabecalho asp-for="Itens.FirstOrDefault().Status"/>
                     </th>
                     <th>
-                        @Html.DisplayNameForInnerType((UsuarioViewModel m) => m.CodigoRedefinicaoSenha)
+                        <asp-cabecalho asp-for="Itens.FirstOrDefault().Moeda"/>
                     </th>
+
                     <th colspan="3">Ações</th>
                 </tr>
             </thead>
@@ -62,23 +65,24 @@ else if (Model != null && Model.Itens != null && Model.Itens.Any())
                 {
                     <tr class="align-middle">
                         <td>
-                            @Html.DisplayFor(modelItem => item.NomeCompleto)
+                            @Html.DisplayFor(modelItem => item.Nome)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Email)
+                            @Html.DisplayFor(modelItem => item.Tipo)
                         </td>
-                        <td class="text-start">
-                            @Html.DisplayFor(modelItem => item.Username)
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ValorEstimadoManual)
                         </td>
-                        <td class="text-start">
-                            @Html.DisplayFor(modelItem => item.DataCriacao)
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DataAlvo)
                         </td>
-                        <td class="text-start">
-                            @Html.DisplayFor(modelItem => item.DataAlteracao)
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
                         </td>
-                        <td class="text-start">
-                            @Html.DisplayFor(modelItem => item.CodigoRedefinicaoSenha)
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Moeda)
                         </td>
+                        
                         <td class="p-2 align-content-center w150px">
                             <div class="btn-group" role="group" aria-label="Botões de ação">
                                 <a title="Alterar" class="btn btn@(classBotao)-primary btn-acao p-0 pt-1 pb-1" asp-action="Alterar" asp-route-id="@item.Id">
@@ -91,15 +95,6 @@ else if (Model != null && Model.Itens != null && Model.Itens.Any())
 
                                 <a possui-papel="superadmin" title="Remover" class="btn btn@(classBotao)-danger btn-acao p-0 pt-1 pb-1" asp-action="Deletar" asp-route-id="@item.Id">
                                     <i class="fa-solid fa-lg fa-trash-can"></i>
-                                </a>
-
-                                @{
-                                    var classDisabled = User.Claims.FirstOrDefault(w => w.Type == "UsuarioId").Value != item.Id.ToString()
-                                    ? string.Empty
-                                    : "disabled";
-                                }
-                                <a title="Acessar como" class="btn btn@(classBotao)-secondary btn-acao p-0 pt-1 pb-1 @classDisabled" asp-area="" asp-controller="Login" asp-action="AcessarComo" asp-route-id="@item.Id">
-                                    <i class="fa-solid fa-lg fa-user"></i>
                                 </a>
                             </div>
                         </td>

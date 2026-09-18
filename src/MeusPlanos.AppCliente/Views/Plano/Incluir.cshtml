@@ -1,0 +1,19 @@
+﻿
+@model MeusPlanos.AppCliente.ViewModel.PlanoViewModel
+
+@{
+    ViewData["Title"] = "Plano";
+    ViewData["Icone"] = "<i class='fa fa-home fa-lg text-primary'></i>";
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+}
+
+<form asp-action="Incluir" method="post" class="col-11 px-sm-3 px-md-0 pt-4 mx-auto">
+    <h1>Cadastrar</h1>
+    <hr />
+
+    @Html.EditorForModel()
+</form>

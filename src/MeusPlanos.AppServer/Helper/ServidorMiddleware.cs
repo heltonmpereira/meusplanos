@@ -27,6 +27,9 @@ public static class ServidorMiddleware
         services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
         services.AddScoped<IUsuarioServico, UsuarioServico>();
 
+			services.AddScoped<IPlanoRepositorio, PlanoRepositorio>();
+			services.AddScoped<IPlanoServico, PlanoServico>();
+
         return services;
     }
 }

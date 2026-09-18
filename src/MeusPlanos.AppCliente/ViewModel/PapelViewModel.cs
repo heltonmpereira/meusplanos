@@ -15,7 +15,10 @@ public class PapelViewModel : BaseViewModel, IEntidade<Guid>
     public DateTime DataCadastro { get; set; }
     public DateTime? DataAtualizacao { get; set; }
     public List<SelectListItem> UsuariosSelecionados { get; set; }
-    public bool Deletado { get; set; }
+
+    public DateTime DataCriacao { get; set; }
+    public DateTime DataAlteracao { get; set; }
+    public DateTime DataDelecao { get; set; }
 
     private ICollection<UsuarioPapelViewModel> _usuarios;
     public ICollection<UsuarioPapelViewModel> Usuarios

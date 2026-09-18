@@ -11,7 +11,10 @@ public class Papel : IEntidade<Guid>
     public string Observacao { get; set; }
     public DateTime DataCadastro { get; set; }
     public DateTime? DataAtualizacao { get; set; }
-    public bool Deletado { get; set; }
+
+    public DateTime DataCriacao { get; set; }
+    public DateTime DataAlteracao { get; set; }
+    public DateTime DataDelecao { get; set; }
 
     public ICollection<UsuarioPapel> Usuarios { get; set; }
 }

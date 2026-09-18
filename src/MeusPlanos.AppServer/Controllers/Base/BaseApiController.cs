@@ -29,10 +29,9 @@ public abstract class BaseApiController<TEntidade, TPK, TServico, TRepositorio>(
         {
             var grupoRegistrosDeletados = new GrupoFiltro("Deletados", [
                 new FiltroOpcao(){
-                    NomePropriedade = "Deletado",
+                    NomePropriedade = "DataDelecao",
                     Valor = false,
-                    Operador = TipoOperadorBusca.Igual,
-                    RelacaoOutrosFiltros = TipoOperadorLogico.And
+                    Operador = TipoOperadorBusca.Nulo
                 }
             ])
             {

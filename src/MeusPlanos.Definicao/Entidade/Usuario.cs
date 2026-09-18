@@ -15,7 +15,10 @@ public class Usuario : IEntidade<Guid>
     public DateTime DataCadastro { get; set; }
     public DateTime? DataAtualizacao { get; set; }
     public string CodigoRedefinicaoSenha { get; set; }
-    public bool Deletado { get; set; }
+
+    public DateTime DataCriacao { get; set; }
+    public DateTime DataAlteracao { get; set; }
+    public DateTime DataDelecao { get; set; }
 
     public ICollection<UsuarioPapel> Papeis { get; set; }
 }

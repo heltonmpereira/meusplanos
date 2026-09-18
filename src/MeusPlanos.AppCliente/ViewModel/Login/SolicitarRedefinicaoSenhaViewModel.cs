@@ -19,5 +19,7 @@ public class SolicitarRedefinicaoSenhaViewModel : BaseViewModel, IEntidade<Guid>
     [EmailAddress(ErrorMessage = "Por gentileza, forneça um endereço de e-mail válido.")]
     public string Email { get; set; }
 
-    public bool Deletado { get; set; }
+    public DateTime DataCriacao { get; set; }
+    public DateTime DataAlteracao { get; set; }
+    public DateTime DataDelecao { get; set; }
 }
