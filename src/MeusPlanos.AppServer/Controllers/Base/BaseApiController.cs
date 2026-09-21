@@ -30,15 +30,15 @@ public abstract class BaseApiController<TEntidade, TPK, TServico, TRepositorio>(
             var grupoRegistrosDeletados = new GrupoFiltro("Deletados", [
                 new FiltroOpcao(){
                     NomePropriedade = "DataDelecao",
-                    Valor = false,
-                    Operador = TipoOperadorBusca.Nulo
+                    Operador = TipoOperadorBusca.Diferente,
+                    Valor = null
                 }
             ])
             {
                 RelacaoOutrosGrupos = TipoOperadorLogico.And
             };
 
-            //filtroInicial.AdicionarGrupo(grupoRegistrosDeletados);
+            filtroInicial.AdicionarGrupo(grupoRegistrosDeletados);
         }
 
         return await Servico.RespostaPaginadaServicoAsync<TEntidade>(

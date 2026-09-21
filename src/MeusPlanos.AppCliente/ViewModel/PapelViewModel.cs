@@ -14,9 +14,9 @@ public class PapelViewModel : BaseViewModel, IEntidade<Guid>
     public string Observacao { get; set; }
     public List<SelectListItem> UsuariosSelecionados { get; set; }
 
-    public DateTimeOffset DataCriacao { get; set; }
-    public DateTimeOffset? DataAlteracao { get; set; }
-    public DateTimeOffset? DataDelecao { get; set; }
+    public DateTime DataCriacao { get; set; }
+    public DateTime? DataAlteracao { get; set; }
+    public DateTime? DataDelecao { get; set; }
 
     private ICollection<UsuarioPapelViewModel> _usuarios;
     public ICollection<UsuarioPapelViewModel> Usuarios

@@ -15,9 +15,9 @@ public class PlanoViewModel : BaseViewModel, IEntidade<Guid>
     public StatusPlano Status { get; set; }
     public string Moeda { get; set; } = "BRL";
 
-    public DateTimeOffset DataCriacao { get; set; }
-    public DateTimeOffset? DataAlteracao { get; set; }
-    public DateTimeOffset? DataDelecao { get; set; }
+    public DateTime DataCriacao { get; set; }
+    public DateTime? DataAlteracao { get; set; }
+    public DateTime? DataDelecao { get; set; }
 
     //public ICollection<GrupoPlano> Grupos { get; set; }
     //public ICollection<Aporte> Aportes { get; set; }

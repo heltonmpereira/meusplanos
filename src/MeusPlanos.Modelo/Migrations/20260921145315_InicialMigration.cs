@@ -20,9 +20,9 @@ namespace MeusPlanos.Modelo.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Observacao = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    DataCriacao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false, defaultValueSql: "getdate()"),
-                    DataAlteracao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    DataDelecao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
+                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
+                    DataAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DataDelecao = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,9 +40,9 @@ namespace MeusPlanos.Modelo.Migrations
                     DataAlvo = table.Column<DateOnly>(type: "date", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Moeda = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DataCriacao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false, defaultValueSql: "getdate()"),
-                    DataAlteracao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    DataDelecao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
+                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
+                    DataAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DataDelecao = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -60,9 +60,9 @@ namespace MeusPlanos.Modelo.Migrations
                     Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     CodigoRedefinicaoSenha = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    DataCriacao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false, defaultValueSql: "getdate()"),
-                    DataAlteracao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    DataDelecao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
+                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
+                    DataAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DataDelecao = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -76,9 +76,9 @@ namespace MeusPlanos.Modelo.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PapelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DataCriacao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false, defaultValueSql: "getdate()"),
-                    DataAlteracao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    DataDelecao = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
+                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
+                    DataAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DataDelecao = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -102,8 +102,8 @@ namespace MeusPlanos.Modelo.Migrations
                 columns: new[] { "Id", "DataAlteracao", "DataCriacao", "DataDelecao", "Nome", "Observacao" },
                 values: new object[,]
                 {
-                    { new Guid("7e0a9201-f672-11ed-9ae1-0fc4e648d876"), null, new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, -3, 0, 0, 0)), null, "Admin", null },
-                    { new Guid("7e0a9202-f672-11ed-9ae1-0fc4e648d876"), null, new DateTimeOffset(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, -3, 0, 0, 0)), null, "SuperAdmin", null }
+                    { new Guid("7e0a9201-f672-11ed-9ae1-0fc4e648d876"), null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Admin", null },
+                    { new Guid("7e0a9202-f672-11ed-9ae1-0fc4e648d876"), null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "SuperAdmin", null }
                 });
 
             migrationBuilder.InsertData(

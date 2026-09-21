@@ -10,9 +10,9 @@ public class Papel : IEntidade<Guid>
     public string Nome { get; set; }
     public string Observacao { get; set; }
 
-    public DateTimeOffset DataCriacao { get; set; }
-    public DateTimeOffset? DataAlteracao { get; set; }
-    public DateTimeOffset? DataDelecao { get; set; }
+    public DateTime DataCriacao { get; set; }
+    public DateTime? DataAlteracao { get; set; }
+    public DateTime? DataDelecao { get; set; }
 
     public ICollection<UsuarioPapel> Usuarios { get; set; }
 }
