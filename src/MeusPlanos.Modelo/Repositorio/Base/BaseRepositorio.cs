@@ -32,7 +32,13 @@ public abstract class BaseRepositorio<T, TPK> : IRepositorio<T, TPK>
     {
         var objs = Tabela.Where(w => ids.Contains(w.Id));
 
-        Tabela.RemoveRange(objs);
+        //Tabela.RemoveRange(objs);
+        foreach (var item in objs)
+        {
+            item.DataDelecao = DateTime.Now;
+            Contexto.Entry(item).State = EntityState.Modified;
+        }
+
         var retorno = await Contexto
             .SaveChangesAsync()
             .ConfigureAwait(false);
