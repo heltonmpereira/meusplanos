@@ -19,6 +19,9 @@ public class PlanoViewModel : BaseViewModel, IEntidade<Guid>
     public DateTime? DataAlteracao { get; set; }
     public DateTime? DataDelecao { get; set; }
 
+    public Guid ProprietarioId { get; set; }
+    public UsuarioViewModel Proprietario { get; set; }
+
     //public ICollection<GrupoPlano> Grupos { get; set; }
     //public ICollection<Aporte> Aportes { get; set; }
 }

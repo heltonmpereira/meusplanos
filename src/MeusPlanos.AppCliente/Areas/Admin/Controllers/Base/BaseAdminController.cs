@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MeusPlanos.AppCliente.Areas.Admin.Controllers.Base;
 
-[Authorize(Roles = "admin,usuariologado")]
+[Authorize(Roles = "admin")]
 [Area("Admin")]
 public abstract class BaseAdminController<T, TPK, TSERVICO>(TSERVICO servico, IHttpContextAccessor httpContextAccessor) : BaseController<T, TPK, TSERVICO>(servico, httpContextAccessor)
     where T : BaseViewModel, IEntidade<TPK>

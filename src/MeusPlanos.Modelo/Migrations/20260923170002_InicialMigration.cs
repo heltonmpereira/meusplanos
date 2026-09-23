@@ -30,26 +30,6 @@ namespace MeusPlanos.Modelo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Plano",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Tipo = table.Column<int>(type: "int", nullable: false),
-                    ValorEstimadoManual = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    DataAlvo = table.Column<DateOnly>(type: "date", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    Moeda = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
-                    DataAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DataDelecao = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Plano", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Usuario",
                 columns: table => new
                 {
@@ -67,6 +47,33 @@ namespace MeusPlanos.Modelo.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuario", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Plano",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Tipo = table.Column<int>(type: "int", nullable: false),
+                    ValorEstimadoManual = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    DataAlvo = table.Column<DateOnly>(type: "date", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Moeda = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
+                    DataAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DataDelecao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ProprietarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Plano", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Plano_Usuario_ProprietarioId",
+                        column: x => x.ProprietarioId,
+                        principalTable: "Usuario",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -125,6 +132,11 @@ namespace MeusPlanos.Modelo.Migrations
                 table: "Papel",
                 column: "Nome",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Plano_ProprietarioId",
+                table: "Plano",
+                column: "ProprietarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Usuario_Email",

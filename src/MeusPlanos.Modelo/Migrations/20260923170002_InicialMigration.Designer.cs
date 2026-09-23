@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeusPlanos.Modelo.Migrations
 {
     [DbContext(typeof(MeusPlanosContext))]
-    [Migration("20260921145315_InicialMigration")]
+    [Migration("20260923170002_InicialMigration")]
     partial class InicialMigration
     {
         /// <inheritdoc />
@@ -100,6 +100,9 @@ namespace MeusPlanos.Modelo.Migrations
                     b.Property<string>("Nome")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("ProprietarioId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -110,6 +113,8 @@ namespace MeusPlanos.Modelo.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProprietarioId");
 
                     b.ToTable("Plano", (string)null);
                 });
@@ -229,6 +234,17 @@ namespace MeusPlanos.Modelo.Migrations
                             PapelId = new Guid("7e0a9202-f672-11ed-9ae1-0fc4e648d876"),
                             UsuarioId = new Guid("7e0a9200-f672-11ed-9ae1-0fc4e648d876")
                         });
+                });
+
+            modelBuilder.Entity("MeusPlanos.Definicao.Entidade.Plano", b =>
+                {
+                    b.HasOne("MeusPlanos.Definicao.Entidade.Usuario", "Proprietario")
+                        .WithMany()
+                        .HasForeignKey("ProprietarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Proprietario");
                 });
 
             modelBuilder.Entity("MeusPlanos.Definicao.Entidade.UsuarioPapel", b =>

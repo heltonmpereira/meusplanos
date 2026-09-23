@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MeusPlanos.AppCliente.Areas.Admin.Controllers;
 
-public class PapelController(IPapelRefit servico, IUsuarioRefit usuarioServico, IHttpContextAccessor httpContextAccessor) : Base.BaseAdminController<PapelViewModel, Guid, IPapelRefit>(servico, httpContextAccessor)
+public class PapelController(IPapelRefit servico, IUsuarioRefit usuarioServico, IHttpContextAccessor httpContextAccessor) 
+    : Base.BaseAdminController<PapelViewModel, Guid, IPapelRefit>(servico, httpContextAccessor)
 {
     private readonly IUsuarioRefit _usuarioServico = usuarioServico;
 
