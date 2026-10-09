@@ -65,7 +65,7 @@ else if (Model != null && Model.Itens != null && Model.Itens.Any())
                     <th>
                         <asp-cabecalho asp-for="Itens.FirstOrDefault().Descricao"/>
                     </th>
-                    <th colspan="4">Ações</th>
+                    <th colspan="5">Ações</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -76,10 +76,13 @@ else if (Model != null && Model.Itens != null && Model.Itens.Any())
                         <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                         <td>@Html.DisplayFor(modelItem => item.ValorOrcamentoEstimado)</td>
                         <td>@Html.DisplayFor(modelItem => item.Descricao)</td>
-                        <td class="p-2 align-content-center w200px">
+                        <td class="p-2 align-content-center w250px">
                             <div class="btn-group" role="group" aria-label="Botões de ação">
-                                <a title="Opções" class="btn btn@(classBotao)-info btn-acao p-0 pt-1 pb-1" asp-action="Index" asp-controller="PlanoItemOpcao" asp-route-PlanoItemId="@item.Id">
+                                <a title="Gerenciar Opções" class="btn btn@(classBotao)-info btn-acao p-0 pt-1 pb-1" asp-action="Index" asp-controller="PlanoItemOpcao" asp-route-PlanoItemId="@item.Id">
                                     <i class="fa-solid fa-lg fa-layer-group"></i>
+                                </a>
+                                <a title="Nova Opção" class="btn btn@(classBotao)-secondary btn-acao p-0 pt-1 pb-1" asp-action="Incluir" asp-controller="PlanoItemOpcao" asp-route-PlanoItemId="@item.Id">
+                                    <i class="fa-solid fa-lg fa-plus"></i>
                                 </a>
                                 <a title="Alterar" class="btn btn@(classBotao)-primary btn-acao p-0 pt-1 pb-1" asp-action="Alterar" asp-route-id="@item.Id">
                                     <i class="fa-solid fa-lg fa-pen-to-square"></i>

@@ -62,7 +62,7 @@ else if (Model != null && Model.Itens != null && Model.Itens.Any())
                     <th>
                         <asp-cabecalho asp-for="Itens.FirstOrDefault().Descricao"/>
                     </th>
-                    <th colspan="4">Ações</th>
+                    <th colspan="5">Ações</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -72,10 +72,13 @@ else if (Model != null && Model.Itens != null && Model.Itens.Any())
                         <td>@Html.DisplayFor(modelItem => item.Ordem)</td>
                         <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                         <td>@Html.DisplayFor(modelItem => item.Descricao)</td>
-                        <td class="p-2 align-content-center w200px">
+                        <td class="p-2 align-content-center w250px">
                             <div class="btn-group" role="group" aria-label="Botões de ação">
-                                <a title="Links/Ofertas" class="btn btn@(classBotao)-info btn-acao p-0 pt-1 pb-1" asp-action="Index" asp-controller="PlanoItemOpcaoLink" asp-route-PlanoItemOpcaoId="@item.Id">
+                                <a title="Gerenciar Links/Ofertas" class="btn btn@(classBotao)-info btn-acao p-0 pt-1 pb-1" asp-action="Index" asp-controller="PlanoItemOpcaoLink" asp-route-PlanoItemOpcaoId="@item.Id">
                                     <i class="fa-solid fa-lg fa-link"></i>
+                                </a>
+                                <a title="Novo Link/Oferta" class="btn btn@(classBotao)-secondary btn-acao p-0 pt-1 pb-1" asp-action="Incluir" asp-controller="PlanoItemOpcaoLink" asp-route-PlanoItemOpcaoId="@item.Id">
+                                    <i class="fa-solid fa-lg fa-plus"></i>
                                 </a>
                                 <a title="Alterar" class="btn btn@(classBotao)-primary btn-acao p-0 pt-1 pb-1" asp-action="Alterar" asp-route-id="@item.Id">
                                     <i class="fa-solid fa-lg fa-pen-to-square"></i>
