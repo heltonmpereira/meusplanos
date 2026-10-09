@@ -1,4 +1,4 @@
-﻿using MeusPlanos.Definicao.Interface.Repositorio;
+using MeusPlanos.Definicao.Interface.Repositorio;
 using MeusPlanos.Definicao.Interface.Servico;
 using MeusPlanos.Modelo.Data;
 using MeusPlanos.Modelo.Repositorio;
@@ -27,8 +27,17 @@ public static class ServidorMiddleware
         services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
         services.AddScoped<IUsuarioServico, UsuarioServico>();
 
-			services.AddScoped<IPlanoRepositorio, PlanoRepositorio>();
-			services.AddScoped<IPlanoServico, PlanoServico>();
+		services.AddScoped<IPlanoRepositorio, PlanoRepositorio>();
+		services.AddScoped<IPlanoServico, PlanoServico>();
+
+        services.AddScoped<IPlanoItemRepositorio, PlanoItemRepositorio>();
+        services.AddScoped<IPlanoItemServico, PlanoItemServico>();
+
+        services.AddScoped<IPlanoItemOpcaoRepositorio, PlanoItemOpcaoRepositorio>();
+        services.AddScoped<IPlanoItemOpcaoServico, PlanoItemOpcaoServico>();
+
+        services.AddScoped<IPlanoItemOpcaoLinkRepositorio, PlanoItemOpcaoLinkRepositorio>();
+        services.AddScoped<IPlanoItemOpcaoLinkServico, PlanoItemOpcaoLinkServico>();
 
         return services;
     }

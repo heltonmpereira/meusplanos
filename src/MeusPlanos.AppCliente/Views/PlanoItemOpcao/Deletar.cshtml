@@ -1,0 +1,36 @@
+
+@model MeusPlanos.AppCliente.ViewModel.PlanoItemOpcaoViewModel
+
+@{
+    ViewData["Title"] = "Opção do Item";
+    ViewData["Icone"] = "<i class='fa fa-layer-group fa-lg text-primary'></i>";
+
+    @section Scripts {
+        @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+}
+
+<form asp-action="Deletar" method="post" class="col-11 px-sm-3 px-md-0 pt-4 mx-auto">
+    <h1>Deletar Opção</h1>
+    <h4>Tem certeza que deseja remover este registro?</h4>
+
+    @Html.DisplayFor(model => model)
+
+    <div class="row">
+        <div class="form-group">
+            <hr />
+            <input asp-acessando-como type="submit" value="Remover" class="btn btn-danger" />
+
+            @if (Model.PlanoItemId != Guid.Empty)
+            {
+                <a class="btn @(ViewBag.ClasseBotao)secondary" asp-action="Index" asp-route-PlanoItemId="@Model.PlanoItemId">Voltar</a>
+            }
+            else
+            {
+                <a class="btn @(ViewBag.ClasseBotao)secondary" asp-action="Index">Voltar</a>
+            }
+        </div>
+    </div>
+</form>

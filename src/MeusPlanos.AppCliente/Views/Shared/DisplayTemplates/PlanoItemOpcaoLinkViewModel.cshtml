@@ -1,0 +1,57 @@
+
+@model MeusPlanos.AppCliente.ViewModel.PlanoItemOpcaoLinkViewModel
+
+<hr />
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.NomeSite)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.NomeSite)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Url)
+    </dt>
+    <dd class="col-sm-10">
+        @if (!string.IsNullOrWhiteSpace(Model.Url))
+        {
+            <a href="@Model.Url" target="_blank" rel="noopener noreferrer">@Model.Url</a>
+        }
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Valor)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Valor)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.DataCotacao)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.DataCotacao)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.CondicoesPagamento)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.CondicoesPagamento)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Observacoes)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Observacoes)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.PlanoItemOpcaoId)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.PlanoItemOpcaoId)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.DataCriacao)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.DataCriacao)
+    </dd>
+</dl>

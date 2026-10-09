@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using MeusPlanos.AppCliente.ViewModel.Base;
 using MeusPlanos.Definicao.Interface.Entidade;
 using MeusPlanos.Definicao.Modelo.Enum;
@@ -21,6 +22,8 @@ public class PlanoViewModel : BaseViewModel, IEntidade<Guid>
 
     public Guid ProprietarioId { get; set; }
     public UsuarioViewModel Proprietario { get; set; }
+
+    public ICollection<PlanoItemViewModel> Itens { get; set; }
 
     //public ICollection<GrupoPlano> Grupos { get; set; }
     //public ICollection<Aporte> Aportes { get; set; }

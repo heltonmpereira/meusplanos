@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
@@ -130,6 +130,9 @@ public class MeusPlanosContext(DbContextOptions options) : DbContext(options), I
     }
 
     public DbSet<Papel> Papeis { get; set; }
-		public DbSet<Plano> Planos { get; set; }
+    public DbSet<Plano> Planos { get; set; }
+    public DbSet<PlanoItem> PlanoItens { get; set; }
+    public DbSet<PlanoItemOpcao> PlanoItemOpcoes { get; set; }
+    public DbSet<PlanoItemOpcaoLink> PlanoItemOpcaoLinks { get; set; }
     public DbSet<Usuario> Usuarios { get; set; }
 }

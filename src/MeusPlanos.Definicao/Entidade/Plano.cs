@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using MeusPlanos.Definicao.Interface.Entidade;
 using MeusPlanos.Definicao.Modelo.Enum;
 
@@ -20,6 +21,8 @@ public class Plano : IEntidade<Guid>
 
     public Guid ProprietarioId { get; set; }
     public Usuario Proprietario { get; set; }
+
+    public ICollection<PlanoItem> Itens { get; set; }
 
     //public ICollection<GrupoPlano> Grupos { get; set; }
     //public ICollection<Aporte> Aportes { get; set; }

@@ -116,6 +116,143 @@ namespace MeusPlanos.Modelo.Migrations
                     b.ToTable("Plano", (string)null);
                 });
 
+            modelBuilder.Entity("MeusPlanos.Definicao.Entidade.PlanoItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DataAlteracao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<DateTime?>("DataDelecao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descricao")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("Ordem")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("PlanoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("ValorOrcamentoEstimado")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlanoId");
+
+                    b.ToTable("PlanoItem", (string)null);
+                });
+
+            modelBuilder.Entity("MeusPlanos.Definicao.Entidade.PlanoItemOpcao", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Caracteristicas")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<DateTime?>("DataAlteracao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<DateTime?>("DataDelecao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descricao")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("Ordem")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("PlanoItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlanoItemId");
+
+                    b.ToTable("PlanoItemOpcao", (string)null);
+                });
+
+            modelBuilder.Entity("MeusPlanos.Definicao.Entidade.PlanoItemOpcaoLink", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CondicoesPagamento")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateTime?>("DataAlteracao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataCotacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<DateTime?>("DataDelecao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NomeSite")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Observacoes")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<Guid>("PlanoItemOpcaoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<decimal?>("Valor")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlanoItemOpcaoId");
+
+                    b.ToTable("PlanoItemOpcaoLink", (string)null);
+                });
+
             modelBuilder.Entity("MeusPlanos.Definicao.Entidade.Usuario", b =>
                 {
                     b.Property<Guid>("Id")
@@ -244,6 +381,39 @@ namespace MeusPlanos.Modelo.Migrations
                     b.Navigation("Proprietario");
                 });
 
+            modelBuilder.Entity("MeusPlanos.Definicao.Entidade.PlanoItem", b =>
+                {
+                    b.HasOne("MeusPlanos.Definicao.Entidade.Plano", "Plano")
+                        .WithMany("Itens")
+                        .HasForeignKey("PlanoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Plano");
+                });
+
+            modelBuilder.Entity("MeusPlanos.Definicao.Entidade.PlanoItemOpcao", b =>
+                {
+                    b.HasOne("MeusPlanos.Definicao.Entidade.PlanoItem", "PlanoItem")
+                        .WithMany("Opcoes")
+                        .HasForeignKey("PlanoItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("PlanoItem");
+                });
+
+            modelBuilder.Entity("MeusPlanos.Definicao.Entidade.PlanoItemOpcaoLink", b =>
+                {
+                    b.HasOne("MeusPlanos.Definicao.Entidade.PlanoItemOpcao", "PlanoItemOpcao")
+                        .WithMany("Links")
+                        .HasForeignKey("PlanoItemOpcaoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("PlanoItemOpcao");
+                });
+
             modelBuilder.Entity("MeusPlanos.Definicao.Entidade.UsuarioPapel", b =>
                 {
                     b.HasOne("MeusPlanos.Definicao.Entidade.Papel", "Papel")
@@ -266,6 +436,21 @@ namespace MeusPlanos.Modelo.Migrations
             modelBuilder.Entity("MeusPlanos.Definicao.Entidade.Papel", b =>
                 {
                     b.Navigation("Usuarios");
+                });
+
+            modelBuilder.Entity("MeusPlanos.Definicao.Entidade.Plano", b =>
+                {
+                    b.Navigation("Itens");
+                });
+
+            modelBuilder.Entity("MeusPlanos.Definicao.Entidade.PlanoItem", b =>
+                {
+                    b.Navigation("Opcoes");
+                });
+
+            modelBuilder.Entity("MeusPlanos.Definicao.Entidade.PlanoItemOpcao", b =>
+                {
+                    b.Navigation("Links");
                 });
 
             modelBuilder.Entity("MeusPlanos.Definicao.Entidade.Usuario", b =>

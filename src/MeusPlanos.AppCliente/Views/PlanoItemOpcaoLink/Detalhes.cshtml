@@ -1,0 +1,38 @@
+
+@model MeusPlanos.AppCliente.ViewModel.PlanoItemOpcaoLinkViewModel
+
+@{
+    ViewData["Title"] = "Link / Oferta";
+    ViewData["Icone"] = "<i class='fa fa-link fa-lg text-primary'></i>";
+
+    @section Scripts {
+        @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+}
+
+<div class="col-11 px-sm-3 px-md-0 pt-4 mx-auto">
+    <h1>Detalhes do Link / Oferta</h1>
+
+    @Html.DisplayFor(model => model)
+
+    @if (!string.IsNullOrWhiteSpace(Model.Url))
+    {
+        <div class="mt-4">
+            <a class="btn btn-primary" href="@Model.Url" target="_blank" rel="noopener noreferrer">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir Site
+            </a>
+        </div>
+    }
+
+    <hr />
+    @if (Model.PlanoItemOpcaoId != Guid.Empty)
+    {
+        <a class="btn @(ViewBag.ClasseBotao)secondary" asp-action="Index" asp-route-PlanoItemOpcaoId="@Model.PlanoItemOpcaoId">Voltar</a>
+    }
+    else
+    {
+        <a class="btn @(ViewBag.ClasseBotao)secondary" asp-action="Index">Voltar</a>
+    }
+</div>

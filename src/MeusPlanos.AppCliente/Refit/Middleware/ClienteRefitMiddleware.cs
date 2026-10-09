@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Extensions.DependencyInjection;
 using Refit;
 
@@ -39,12 +39,30 @@ public static class ClienteRefitMiddleware
             .ConfigureHttpClient(c => c.BaseAddress =
                 new Uri($"{baseUrlApi}/Papel"));
 
-			services
+		services
                 .AddRefitClient<IPlanoRefit>()
                 .AddHttpMessageHandler<AuthorizationMessageHandler>()
                 //.ConfigurePrimaryHttpMessageHandler(() => primaryHttpMessageHandler)
                 .ConfigureHttpClient(c => c.BaseAddress =
                     new Uri($"{baseUrlApi}/Plano")); 
+
+        services
+            .AddRefitClient<IPlanoItemRefit>()
+            .AddHttpMessageHandler<AuthorizationMessageHandler>()
+            .ConfigureHttpClient(c => c.BaseAddress =
+                new Uri($"{baseUrlApi}/PlanoItem"));
+
+        services
+            .AddRefitClient<IPlanoItemOpcaoRefit>()
+            .AddHttpMessageHandler<AuthorizationMessageHandler>()
+            .ConfigureHttpClient(c => c.BaseAddress =
+                new Uri($"{baseUrlApi}/PlanoItemOpcao"));
+
+        services
+            .AddRefitClient<IPlanoItemOpcaoLinkRefit>()
+            .AddHttpMessageHandler<AuthorizationMessageHandler>()
+            .ConfigureHttpClient(c => c.BaseAddress =
+                new Uri($"{baseUrlApi}/PlanoItemOpcaoLink"));
 
         return services;
     }

@@ -1,0 +1,20 @@
+
+@model MeusPlanos.AppCliente.ViewModel.PlanoItemOpcaoViewModel
+
+@{
+    ViewData["Title"] = "Opção do Item";
+    ViewData["Icone"] = "<i class='fa fa-layer-group fa-lg text-primary'></i>";
+
+    @section Scripts {
+        @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+}
+
+<form asp-action="Alterar" method="post" class="col-11 px-sm-3 px-md-0 pt-4 mx-auto">
+    <h1>Alterar Opção</h1>
+    <hr />
+
+    @Html.EditorForModel()
+</form>
