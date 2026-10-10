@@ -40,27 +40,21 @@
         }
     }
 
-    // ========== UPLOAD DE CAPA (unico) ==========
-    $(document).on('click', '.btn-enviar-imagem', function () {
-        var btn = $(this);
-        var inputId = btn.data('input');
-        var input = document.getElementById(inputId);
-        if (!input || !input.files || input.files.length === 0) {
+    function executarUploadCapa(inputFileEl) {
+        if (!inputFileEl || !inputFileEl.files || inputFileEl.files.length === 0) {
             notificar('Aviso', 'Selecione um arquivo.', 'warning');
-            return;
+            return Promise.reject(new Error('Sem arquivo'));
         }
-
-        var file = input.files[0];
-        var campoId = input.getAttribute('data-campo-id');
-        var previewId = input.getAttribute('data-preview');
-        var uploadUrl = input.getAttribute('data-url-upload') || '/Home/UploadImagem';
+        var file = inputFileEl.files[0];
+        var campoId = inputFileEl.getAttribute('data-campo-id');
+        var previewId = inputFileEl.getAttribute('data-preview');
+        var uploadUrl = inputFileEl.getAttribute('data-url-upload') || '/Home/UploadImagem';
+        var inputId = inputFileEl.id;
 
         var form = new FormData();
         form.append('arquivo', file, file.name);
 
-        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Enviando...');
-
-        ajaxFormFile(uploadUrl, form)
+        return ajaxFormFile(uploadUrl, form)
             .then(function (resp) {
                 if (!resp || !resp.sucesso) throw new Error(resp && resp.mensagem ? resp.mensagem : 'Falha ao enviar.');
                 document.getElementById('hidden_' + campoId).value = resp.id;
@@ -71,13 +65,44 @@
                 var info = document.getElementById('info_' + inputId);
                 if (info) info.innerHTML = '<span>' + (resp.nomeOriginal || file.name) + '</span> <span class="mx-1">·</span> <span>' + (resp.tamanho || '') + '</span>';
                 notificar('Sucesso', 'Imagem enviada.', 'success');
+                return resp;
             })
             .catch(function (err) {
                 notificar('Erro', err.message || err, 'danger');
-            })
+                throw err;
+            });
+    }
+
+    // ========== UPLOAD DE CAPA (unico) ==========
+    $(document).on('click', '.btn-enviar-imagem', function () {
+        var btn = $(this);
+        var inputId = btn.data('input');
+        var input = document.getElementById(inputId);
+        if (!input) return;
+        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Enviando...');
+        executarUploadCapa(input)
             .finally(function () {
                 btn.prop('disabled', false).html('<i class="fas fa-upload"></i> Enviar');
             });
+    });
+
+    // AUTO-UPLOAD ao selecionar o arquivo (melhor UX — não precisa clicar em "Enviar")
+    $(document).on('change', '.arquivo-upload-capa', function () {
+        var input = this;
+        if (!input.files || input.files.length === 0) return;
+
+        var inputId = input.id;
+        var btn = document.querySelector('.btn-enviar-imagem[data-input="' + inputId + '"]');
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+        }
+        executarUploadCapa(input).finally(function () {
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-upload"></i> Enviar';
+            }
+        });
     });
 
     $(document).on('click', '.btn-remover-imagem', function () {
@@ -117,7 +142,6 @@
     // ========== GALERIA DE IMAGENS (multipla, para links) ==========
 
     window.GaleriaImagensLink = {
-        // Envia e adiciona uma imagem na galeria
         uploadAndAppend: function (inputFileEl, linkId, containerGaleriaId, hiddenOrdemId) {
             if (!inputFileEl || !inputFileEl.files || inputFileEl.files.length === 0) return Promise.reject(new Error('Sem arquivo.'));
             var uploadUrl = inputFileEl.getAttribute('data-url-upload') || '/Home/UploadImagem';
@@ -138,8 +162,6 @@
         },
 
         vincularERenderizar: function (respostas, linkId, containerGaleriaId, hiddenOrdemId) {
-            // Após envio, se houver linkId, podemos chamar a API de vinculo. 
-            // Aqui renderizamos thumbnails com hidden inputs para POST.
             var container = document.getElementById(containerGaleriaId);
             if (!container) return Promise.resolve(respostas);
             var ordemAtual = container.querySelectorAll('.galeria-item').length;
@@ -154,6 +176,7 @@
         },
 
         renderizarItem: function (img, ordem, ehCapa) {
+            var linkImagemId = (img && img.linkImagemId) ? img.linkImagemId : '';
             return `
                 <div class="galeria-item card mb-2 mr-2 d-inline-block ${ehCapa ? 'border-primary border-2' : ''}"
                      data-id="${img.id}" style="width:160px;vertical-align:top;">
@@ -171,9 +194,10 @@
                             <button type="button" class="btn btn-outline-secondary btn-galeria-descer" title="Mover para baixo"><i class="fas fa-arrow-down"></i></button>
                             <button type="button" class="btn btn-outline-danger btn-galeria-remover" title="Remover"><i class="fas fa-times"></i></button>
                         </div>
-                        <input type="hidden" class="gi-id" value="${img.id}" />
-                        <input type="hidden" class="gi-ordem" value="${ordem}" />
-                        <input type="hidden" class="gi-capa" value="${ehCapa ? 'true' : 'false'}" />
+                        <input type="hidden" class="gi-id" name="GaleriaImagensIds[]" value="${img.id}" />
+                        <input type="hidden" class="gi-linkimagemid" name="GaleriaLinkImagemIds[]" value="${linkImagemId}" />
+                        <input type="hidden" class="gi-ordem" name="GaleriaOrdens[]" value="${ordem}" />
+                        <input type="hidden" class="gi-capa" name="GaleriaCapas[]" value="${ehCapa ? 'true' : 'false'}" />
                     </div>
                 </div>`;
         },
@@ -252,6 +276,33 @@
             })
             .catch(function (err) { notificar('Erro', err.message || err, 'danger'); })
             .finally(function () { btn.prop('disabled', false).html('<i class="fas fa-upload"></i> Adicionar'); });
+    });
+
+    // AUTO-UPLOAD da galeria ao selecionar arquivos (não precisa clicar em "Adicionar")
+    $(document).on('change', '.arquivo-upload-galeria', function () {
+        var input = this;
+        if (!input.files || input.files.length === 0) return;
+
+        var btn = document.querySelector('.btn-enviar-galeria[data-input="' + input.id + '"]');
+        if (!btn) return;
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+        var containerId = btn.getAttribute('data-container');
+        var hiddenOrdemId = btn.getAttribute('data-hidden-ordem');
+        var linkId = btn.getAttribute('data-link-id') || null;
+
+        window.GaleriaImagensLink.uploadAndAppend(input, linkId, containerId, hiddenOrdemId)
+            .then(function () {
+                input.value = '';
+                notificar('Sucesso', 'Imagens adicionadas.', 'success');
+            })
+            .catch(function (err) { notificar('Erro', err.message || err, 'danger'); })
+            .finally(function () {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-upload"></i> Adicionar';
+            });
     });
 
 })(jQuery);

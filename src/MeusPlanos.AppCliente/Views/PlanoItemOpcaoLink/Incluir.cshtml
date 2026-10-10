@@ -8,6 +8,23 @@
         @{
             await Html.RenderPartialAsync("_ValidationScriptsPartial");
         }
+        <script src="~/js/upload-imagem.js" asp-append-version="true"></script>
+        <script nws-csp-add-nonce="true" type="text/javascript">
+            (function () {
+                var frm = document.querySelector('form');
+                if (frm) {
+                    frm.addEventListener('submit', function () {
+                        var ids = [];
+                        document.querySelectorAll('#galeria_container_link .galeria-item').forEach(function (el, i) {
+                            var hOrdem = el.querySelector('.gi-ordem'); if (hOrdem) hOrdem.value = String(i);
+                            ids.push(el.getAttribute('data-id'));
+                        });
+                        var h = document.getElementById('hidden_OrdemImagensLink');
+                        if (h) h.value = JSON.stringify(ids);
+                    });
+                }
+            })();
+        </script>
     }
 }
 
