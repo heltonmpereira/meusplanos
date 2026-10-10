@@ -8,6 +8,7 @@
     var imagensExistentes = Model?.ImagensLinks
         ?.OrderBy(o => o.Ordem)
         .ToList() ?? new List<MeusPlanos.AppCliente.ViewModel.PlanoItemOpcaoLinkImagemViewModel>();
+    var galeriaTheme = ViewBag.Theme == "dark" ? "galeria-container-dark" : "galeria-container-light";
 }
 
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -77,23 +78,21 @@
                     </div>
                 </div>
 
-                <div id="galeria_container_link" class="border rounded p-2"
-                     style="min-height:180px; @(ViewBag.Theme == "dark" ? "background:#1f2937;border-color:#374151 !important;" : "background:#f8f9fa;")">
+                <div id="galeria_container_link" class="border rounded p-2 @galeriaTheme">
                     @foreach (var li in imagensExistentes)
                     {
                         var img = li?.Imagem;
                         var url = img != null && !string.IsNullOrWhiteSpace(img.CaminhoRelativo)
                             ? $"{baseUrlApi}/uploads/imagens/{img.CaminhoRelativo.Replace('\\', '/')}"
                             : null;
-                        <div class="galeria-item card mb-2 mr-2 d-inline-block @(li.EhCapa ? "border-primary border-2" : "")"
+                        <div class="galeria-item card mb-2 mr-2 d-inline-block galeria-item-card @(li.EhCapa ? "border-primary border-2" : "")"
                              data-id="@img?.Id"
-                             data-link-imagem-id="@li?.Id"
-                             style="width:160px;vertical-align:top;">
+                             data-link-imagem-id="@li?.Id">
                             <div class="p-1">
-                                <div class="border rounded overflow-hidden" style="height:120px;display:flex;align-items:center;justify-content:center;background:#fff;">
+                                <div class="border rounded overflow-hidden galeria-thumb-box">
                                     @if (!string.IsNullOrWhiteSpace(url))
                                     {
-                                        <img src="@url" class="img-fluid" style="max-height:120px;object-fit:cover;">
+                                        <img src="@url" class="img-fluid galeria-thumb-img">
                                     }
                                 </div>
                                 <div class="pt-2 small">

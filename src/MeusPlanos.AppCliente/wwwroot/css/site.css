@@ -1,4 +1,4 @@
-﻿hr {
+hr {
     border: none;
     border-top: 1px solid !important;
 }
@@ -304,3 +304,126 @@ table thead th {
     flex: 0 0 auto;
     width: 91.66666667%
 }
+
+/**************************************************/
+/* Classes do módulo de Imagem (sem style inline) */
+/**************************************************/
+
+/* Preview de capa (PartialUploadImagemCapa e Detalhes dos itens) */
+.img-preview-capa {
+    max-height: 140px;
+    object-fit: cover;
+}
+
+.img-preview-capa-contain {
+    max-height: 140px;
+    object-fit: contain;
+}
+
+/* Imagem de capa mostrada nas páginas Detalhes */
+.img-detalhe-capa-grande {
+    max-height: 320px;
+    object-fit: contain;
+}
+
+.img-detalhe-capa-media {
+    max-height: 280px;
+    object-fit: contain;
+}
+
+/* Thumbnails na tabela Index */
+.img-thumb-index {
+    max-width: 60px;
+    max-height: 40px;
+    object-fit: cover;
+}
+
+/* Thumbnail na sub-tabela (Detalhes Plano -> Itens / Detalhes Item -> Opções / Detalhes Opção -> Links) */
+.img-thumb-detalhe-sub {
+    max-width: 60px;
+    max-height: 45px;
+    object-fit: cover;
+}
+
+/* Contêiner de preview no PartialUploadImagemCapa (tamanho fixo 140px) */
+.preview-capa-box {
+    height: 140px;
+    width: 100%;
+}
+
+.preview-capa-box-light {
+    height: 140px;
+    width: 100%;
+    background: #f8f9fa;
+}
+
+.preview-capa-box-dark {
+    height: 140px;
+    width: 100%;
+    background: #1f2937;
+    border-color: #374151 !important;
+}
+
+/* Galeria do Link (EditorTemplate) — container da lista */
+.galeria-container {
+    min-height: 180px;
+}
+
+.galeria-container-light {
+    min-height: 180px;
+    background: #f8f9fa;
+}
+
+.galeria-container-dark {
+    min-height: 180px;
+    background: #1f2937;
+    border-color: #374151 !important;
+}
+
+/* Card de uma imagem da galeria (160px) */
+.galeria-item-card {
+    width: 160px;
+    vertical-align: top;
+}
+
+/* Card maior da galeria na página Detalhes do Link (180px) */
+.galeria-item-card-grande {
+    width: 180px;
+}
+
+/* Contêiner da miniatura dentro do card da galeria (120px) */
+.galeria-thumb-box {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+}
+
+/* Miniatura dentro da caixa da galeria */
+.galeria-thumb-img {
+    max-height: 120px;
+    object-fit: cover;
+}
+
+/* Card-img-top da galeria na Detalhes (150px) */
+.galeria-card-img {
+    height: 150px;
+    object-fit: contain;
+    background: #fff;
+    border-bottom: 1px solid var(--bs-border-color, #dee2e6);
+}
+
+/* Larguras das colunas (th width via classe, não inline) */
+.w-72px {
+    width: 72px;
+}
+
+.w-70px {
+    width: 70px;
+}
+
+.w-90px {
+    width: 90px;
+}
+

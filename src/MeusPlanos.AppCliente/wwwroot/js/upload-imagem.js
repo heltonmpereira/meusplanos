@@ -13,7 +13,7 @@
             var xhr = new XMLHttpRequest();
             xhr.open('POST', url, true);
             var token = getRequestToken();
-            if (token) xhr.setRequestHeader('XSRF-REQUEST-TOKEN', token);
+            if (token) xhr.setRequestHeader('XSRF-TOKEN', token);
             if (onProgress && xhr.upload) {
                 xhr.upload.addEventListener('progress', function (e) {
                     if (e.lengthComputable) onProgress(Math.round((e.loaded / e.total) * 100));
@@ -21,10 +21,13 @@
             }
             xhr.onload = function () {
                 try {
-                    var data = JSON.parse(xhr.responseText);
+                    var raw = (xhr.responseText || '').trim();
+                    var data = raw ? JSON.parse(raw) : null;
                     if (xhr.status >= 200 && xhr.status < 300) resolve(data);
-                    else reject(data || new Error('Status ' + xhr.status));
-                } catch (ex) { reject(ex); }
+                    else reject((data && data.mensagem) ? data : new Error('Status ' + xhr.status + (data && data.mensagem ? ' — ' + data.mensagem : '')));
+                } catch (ex) {
+                    reject(new Error('Resposta inválida do servidor (status ' + xhr.status + '). Verifique se está autenticado.'));
+                }
             };
             xhr.onerror = function () { reject(new Error('Erro de rede')); };
             xhr.send(formData);
@@ -60,7 +63,7 @@
                 document.getElementById('hidden_' + campoId).value = resp.id;
                 if (previewId) {
                     var prev = document.getElementById(previewId);
-                    if (prev && resp.url) prev.innerHTML = '<img src="' + resp.url + '" alt="pré-visualização" class="img-fluid" style="max-height:140px;object-fit:cover;" />';
+                    if (prev && resp.url) prev.innerHTML = '<img src="' + resp.url + '" alt="pré-visualização" class="img-fluid img-preview-capa" />';
                 }
                 var info = document.getElementById('info_' + inputId);
                 if (info) info.innerHTML = '<span>' + (resp.nomeOriginal || file.name) + '</span> <span class="mx-1">·</span> <span>' + (resp.tamanho || '') + '</span>';
@@ -86,25 +89,6 @@
             });
     });
 
-    // AUTO-UPLOAD ao selecionar o arquivo (melhor UX — não precisa clicar em "Enviar")
-    $(document).on('change', '.arquivo-upload-capa', function () {
-        var input = this;
-        if (!input.files || input.files.length === 0) return;
-
-        var inputId = input.id;
-        var btn = document.querySelector('.btn-enviar-imagem[data-input="' + inputId + '"]');
-        if (btn) {
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-        }
-        executarUploadCapa(input).finally(function () {
-            if (btn) {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-upload"></i> Enviar';
-            }
-        });
-    });
-
     $(document).on('click', '.btn-remover-imagem', function () {
         var btn = $(this);
         var inputId = btn.data('input');
@@ -122,7 +106,7 @@
         if (i) i.innerHTML = '';
     });
 
-    // Pré-visualização local ao selecionar arquivo
+    // Pré-visualização local ao selecionar arquivo (só exibe no preview; NÃO envia ao servidor automaticamente)
     $(document).on('change', '.arquivo-upload-capa, .arquivo-upload-galeria', function () {
         var inp = this;
         if (!inp.files || inp.files.length === 0) return;
@@ -133,7 +117,7 @@
             var previewId = inp.getAttribute('data-preview');
             if (previewId) {
                 var el = document.getElementById(previewId);
-                if (el) el.innerHTML = '<img src="' + ev.target.result + '" alt="pré-visualização" class="img-fluid" style="max-height:140px;object-fit:cover;" />';
+                if (el) el.innerHTML = '<img src="' + ev.target.result + '" alt="pré-visualização" class="img-fluid img-preview-capa" />';
             }
         };
         reader.readAsDataURL(f);
@@ -178,11 +162,11 @@
         renderizarItem: function (img, ordem, ehCapa) {
             var linkImagemId = (img && img.linkImagemId) ? img.linkImagemId : '';
             return `
-                <div class="galeria-item card mb-2 mr-2 d-inline-block ${ehCapa ? 'border-primary border-2' : ''}"
-                     data-id="${img.id}" style="width:160px;vertical-align:top;">
+                <div class="galeria-item card mb-2 mr-2 d-inline-block galeria-item-card ${ehCapa ? 'border-primary border-2' : ''}"
+                     data-id="${img.id}">
                     <div class="p-1">
-                        <div class="border rounded overflow-hidden" style="height:120px;display:flex;align-items:center;justify-content:center;background:#f8f9fa;">
-                            <img src="${img.url}" class="img-fluid" style="max-height:120px;object-fit:cover;">
+                        <div class="border rounded overflow-hidden galeria-thumb-box">
+                            <img src="${img.url}" class="img-fluid galeria-thumb-img">
                         </div>
                         <div class="pt-2 small">
                             ${ehCapa ? '<span class="badge bg-primary mb-1"><i class="fas fa-star"></i> Capa</span>' : ''}
@@ -276,33 +260,6 @@
             })
             .catch(function (err) { notificar('Erro', err.message || err, 'danger'); })
             .finally(function () { btn.prop('disabled', false).html('<i class="fas fa-upload"></i> Adicionar'); });
-    });
-
-    // AUTO-UPLOAD da galeria ao selecionar arquivos (não precisa clicar em "Adicionar")
-    $(document).on('change', '.arquivo-upload-galeria', function () {
-        var input = this;
-        if (!input.files || input.files.length === 0) return;
-
-        var btn = document.querySelector('.btn-enviar-galeria[data-input="' + input.id + '"]');
-        if (!btn) return;
-
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-
-        var containerId = btn.getAttribute('data-container');
-        var hiddenOrdemId = btn.getAttribute('data-hidden-ordem');
-        var linkId = btn.getAttribute('data-link-id') || null;
-
-        window.GaleriaImagensLink.uploadAndAppend(input, linkId, containerId, hiddenOrdemId)
-            .then(function () {
-                input.value = '';
-                notificar('Sucesso', 'Imagens adicionadas.', 'success');
-            })
-            .catch(function (err) { notificar('Erro', err.message || err, 'danger'); })
-            .finally(function () {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-upload"></i> Adicionar';
-            });
     });
 
 })(jQuery);

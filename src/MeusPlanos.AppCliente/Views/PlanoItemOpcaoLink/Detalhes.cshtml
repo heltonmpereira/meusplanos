@@ -32,7 +32,7 @@
         if (!string.IsNullOrWhiteSpace(capaUrl))
         {
             <div class="mb-4 text-center">
-                <img src="@capaUrl" alt="Capa do Link" class="img-fluid img-thumbnail rounded" style="max-height:320px;object-fit:contain;" />
+                <img src="@capaUrl" alt="Capa do Link" class="img-fluid img-thumbnail rounded img-detalhe-capa-grande" />
             </div>
         }
 
@@ -44,9 +44,9 @@
                 var u = ImgUrl(img?.Imagem?.CaminhoRelativo);
                 if (!string.IsNullOrWhiteSpace(u))
                 {
-                    <div class="card @(img.EhCapa ? "border-primary border-2" : ViewBag.ClasseCard)" style="width:180px;">
+                    <div class="card galeria-item-card-grande @(img.EhCapa ? "border-primary border-2" : ViewBag.ClasseCard)">
                         <a href="@u" target="_blank" rel="noopener noreferrer">
-                            <img src="@u" class="card-img-top p-2" style="height:150px;object-fit:contain;background:#fff;border-bottom:1px solid var(--bs-border-color, #dee2e6);" alt="@img?.Imagem?.NomeOriginal" />
+                            <img src="@u" class="card-img-top p-2 galeria-card-img" alt="@img?.Imagem?.NomeOriginal" />
                         </a>
                         <div class="card-body p-2 small">
                             @if (img.EhCapa)

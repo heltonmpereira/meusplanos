@@ -16,6 +16,7 @@
     var imagemTamanho = ViewData["ImagemTamanho"] as string;
 
     var inputFileId = $"upload_{fullIdCampo}";
+    var themeClass = ViewBag.Theme == "dark" ? "preview-capa-box-dark" : "preview-capa-box-light";
 }
 
 <div class="form-group col-sm-12 col-md-6">
@@ -25,11 +26,10 @@
             <div class="row align-items-center">
                 <div class="col-4">
                     <div id="preview_@inputFileId"
-                         class="border rounded d-flex align-items-center justify-content-center overflow-hidden"
-                         style="height:140px;width:100%; @(ViewBag.Theme == "dark" ? "background:#1f2937;border-color:#374151 !important;" : "background:#f8f9fa;")">
+                         class="border rounded d-flex align-items-center justify-content-center overflow-hidden @themeClass">
                         @if (!string.IsNullOrWhiteSpace(imagemUrl))
                         {
-                            <img src="@imagemUrl" alt="pré-visualização" class="img-fluid" style="max-height:140px;object-fit:cover;" />
+                            <img src="@imagemUrl" alt="pré-visualização" class="img-fluid img-preview-capa" />
                         }
                         else
                         {
