@@ -1,3 +1,6 @@
+
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @using MeusPlanos.AppCliente.Models.Interface;
 @model ListaBaseViewModel<PlanoItemViewModel>
 
@@ -7,6 +10,10 @@
     var planoId = Context.Request.Query["PlanoId"].FirstOrDefault();
     var routeNovo = planoId != null ? new { PlanoId = planoId } : null;
     ViewData["LinkNovo"] = Url.Action("Incluir", routeNovo);
+
+    string BaseUrl() => Configuration["BaseUrlApi"]?.TrimEnd('/');
+    string ImgUrl(string cam) => string.IsNullOrWhiteSpace(cam) || string.IsNullOrWhiteSpace(BaseUrl())
+        ? null : $"{BaseUrl()}/uploads/imagens/{cam.Replace('\\', '/')}";
 
     var filtro = Model == null ? null : Model.FiltroViewModel;
     await Html.RenderPartialAsync("_PartialFiltro", filtro);
@@ -53,6 +60,7 @@ else if (Model != null && Model.Itens != null && Model.Itens.Any())
         <table class="table table-striped table-hover table-valign-middle @tableTheme">
             <thead class="table-primary">
                 <tr>
+                    <th style="width:72px;">Capa</th>
                     <th>
                         <asp-cabecalho asp-for="Itens.FirstOrDefault().Ordem"/>
                     </th>
@@ -71,7 +79,18 @@ else if (Model != null && Model.Itens != null && Model.Itens.Any())
             <tbody class="table-group-divider">
                 @foreach (var item in Model.Itens)
                 {
+                    var capa = ImgUrl(item?.ImagemCapa?.CaminhoRelativo);
                     <tr class="align-middle">
+                        <td class="p-1 text-center">
+                            @if (!string.IsNullOrWhiteSpace(capa))
+                            {
+                                <img src="@capa" class="img-fluid rounded border" style="max-width:60px;max-height:40px;object-fit:cover;" />
+                            }
+                            else
+                            {
+                                <span class="text-muted small"><i class="fa-regular fa-image fa-lg"></i></span>
+                            }
+                        </td>
                         <td>@Html.DisplayFor(modelItem => item.Ordem)</td>
                         <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                         <td>@Html.DisplayFor(modelItem => item.ValorOrcamentoEstimado)</td>

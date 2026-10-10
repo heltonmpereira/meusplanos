@@ -17,6 +17,10 @@ public class PlanoItemOpcaoLinkRepositorio(IDbContext contexto)
         params object[] args)
     {
         return source
-            .Include(i => i.PlanoItemOpcao);
+            .Include(i => i.PlanoItemOpcao)
+                .ThenInclude(o => o.PlanoItem)
+                    .ThenInclude(pi => pi.Plano)
+            .Include(i => i.ImagensLinks)
+                .ThenInclude(li => li.Imagem);
     }
 }

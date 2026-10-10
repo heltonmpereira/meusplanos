@@ -64,6 +64,18 @@ public static class ClienteRefitMiddleware
             .ConfigureHttpClient(c => c.BaseAddress =
                 new Uri($"{baseUrlApi}/PlanoItemOpcaoLink"));
 
+        services
+            .AddRefitClient<IImagemRefit>()
+            .AddHttpMessageHandler<AuthorizationMessageHandler>()
+            .ConfigureHttpClient(c => c.BaseAddress =
+                new Uri($"{baseUrlApi}/Imagem"));
+
+        services
+            .AddRefitClient<IPlanoItemOpcaoLinkImagemRefit>()
+            .AddHttpMessageHandler<AuthorizationMessageHandler>()
+            .ConfigureHttpClient(c => c.BaseAddress =
+                new Uri($"{baseUrlApi}/PlanoItemOpcaoLinkImagem"));
+
         return services;
     }
 }

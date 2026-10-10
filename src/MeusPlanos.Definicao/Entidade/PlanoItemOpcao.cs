@@ -25,6 +25,9 @@ public class PlanoItemOpcao : IEntidade<Guid>
 
     public int Ordem { get; set; }
 
+    public Guid? ImagemCapaId { get; set; }
+    public Imagem ImagemCapa { get; set; }
+
     public DateTime DataCriacao { get; set; }
     public DateTime? DataAlteracao { get; set; }
     public DateTime? DataDelecao { get; set; }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using MeusPlanos.Definicao.Entidade;
 using MeusPlanos.Modelo.Maps.Base;
 using Microsoft.EntityFrameworkCore;
@@ -13,5 +13,11 @@ public class PlanoMap : BaseMap<Plano, Guid>
         base.Configure(builder);
         
         builder.Property(p => p.DataCriacao).HasDefaultValueSql("getdate()");
+
+        builder
+            .HasOne(p => p.ImagemCapa)
+            .WithMany()
+            .HasForeignKey(p => p.ImagemCapaId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

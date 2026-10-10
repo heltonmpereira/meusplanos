@@ -39,6 +39,12 @@ public static class ServidorMiddleware
         services.AddScoped<IPlanoItemOpcaoLinkRepositorio, PlanoItemOpcaoLinkRepositorio>();
         services.AddScoped<IPlanoItemOpcaoLinkServico, PlanoItemOpcaoLinkServico>();
 
+        services.AddScoped<IImagemRepositorio, ImagemRepositorio>();
+        services.AddScoped<IImagemServico, ImagemServico>();
+
+        services.AddScoped<IPlanoItemOpcaoLinkImagemRepositorio, PlanoItemOpcaoLinkImagemRepositorio>();
+        services.AddScoped<IPlanoItemOpcaoLinkImagemServico, PlanoItemOpcaoLinkImagemServico>();
+
         return services;
     }
 }

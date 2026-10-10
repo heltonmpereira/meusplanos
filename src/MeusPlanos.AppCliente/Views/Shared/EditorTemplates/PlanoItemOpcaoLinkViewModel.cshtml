@@ -1,5 +1,14 @@
 
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @model MeusPlanos.AppCliente.ViewModel.PlanoItemOpcaoLinkViewModel
+
+@{
+    var baseUrlApi = Configuration["BaseUrlApi"]?.TrimEnd('/');
+    var imagensExistentes = Model?.ImagensLinks
+        ?.OrderBy(o => o.Ordem)
+        .ToList() ?? new List<MeusPlanos.AppCliente.ViewModel.PlanoItemOpcaoLinkImagemViewModel>();
+}
 
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -46,6 +55,75 @@
 </div>
 
 <div class="row">
+    <div class="form-group col-sm-12">
+        <label class="control-label">Galeria de Imagens</label>
+        <div class="card @ViewBag.ClasseCard galeria-wrapper" data-hidden-ordem="hidden_OrdemImagensLink">
+            <div class="card-body p-3">
+                <div class="row mb-3">
+                    <div class="col-8">
+                        <input id="input_galeria_link" type="file" accept="image/*" multiple
+                               class="form-control form-control-sm arquivo-upload-galeria"
+                               data-url-upload="@Url.Action("UploadImagem", "UploadImagem")" />
+                    </div>
+                    <div class="col-4">
+                        <button type="button"
+                                class="btn @(ViewBag.ClasseBotao)info btn-enviar-galeria w-100"
+                                data-input="input_galeria_link"
+                                data-container="galeria_container_link"
+                                data-hidden-ordem="hidden_OrdemImagensLink"
+                                data-link-id="@(Model?.Id == Guid.Empty ? null : Model?.Id.ToString())">
+                            <i class="fas fa-upload"></i> Adicionar
+                        </button>
+                    </div>
+                </div>
+
+                <div id="galeria_container_link" class="border rounded p-2"
+                     style="min-height:180px; @(ViewBag.Theme == "dark" ? "background:#1f2937;border-color:#374151 !important;" : "background:#f8f9fa;")">
+                    @foreach (var li in imagensExistentes)
+                    {
+                        var img = li?.Imagem;
+                        var url = img != null && !string.IsNullOrWhiteSpace(img.CaminhoRelativo)
+                            ? $"{baseUrlApi}/uploads/imagens/{img.CaminhoRelativo.Replace('\\', '/')}"
+                            : null;
+                        <div class="galeria-item card mb-2 mr-2 d-inline-block @(li.EhCapa ? "border-primary border-2" : "")"
+                             data-id="@img?.Id"
+                             data-link-imagem-id="@li?.Id"
+                             style="width:160px;vertical-align:top;">
+                            <div class="p-1">
+                                <div class="border rounded overflow-hidden" style="height:120px;display:flex;align-items:center;justify-content:center;background:#fff;">
+                                    @if (!string.IsNullOrWhiteSpace(url))
+                                    {
+                                        <img src="@url" class="img-fluid" style="max-height:120px;object-fit:cover;">
+                                    }
+                                </div>
+                                <div class="pt-2 small">
+                                    @if (li.EhCapa)
+                                    {
+                                        <span class="badge bg-primary mb-1"><i class="fas fa-star"></i> Capa</span>
+                                    }
+                                    <div class="text-truncate" title="@img?.NomeOriginal">@img?.NomeOriginal</div>
+                                </div>
+                                <div class="btn-group btn-group-sm mt-1 d-flex" role="group">
+                                    <button type="button" class="btn btn-outline-primary btn-galeria-capa" title="Definir como capa"><i class="fas fa-star"></i></button>
+                                    <button type="button" class="btn btn-outline-secondary btn-galeria-subir" title="Mover para cima"><i class="fas fa-arrow-up"></i></button>
+                                    <button type="button" class="btn btn-outline-secondary btn-galeria-descer" title="Mover para baixo"><i class="fas fa-arrow-down"></i></button>
+                                    <button type="button" class="btn btn-outline-danger btn-galeria-remover" title="Remover"><i class="fas fa-times"></i></button>
+                                </div>
+                                <input type="hidden" class="gi-id" name="GaleriaImagensIds[]" value="@img?.Id" />
+                                <input type="hidden" class="gi-linkimagemid" name="GaleriaLinkImagemIds[]" value="@li?.Id" />
+                                <input type="hidden" class="gi-ordem" name="GaleriaOrdens[]" value="@li.Ordem" />
+                                <input type="hidden" class="gi-capa" name="GaleriaCapas[]" value="@(li.EhCapa ? "true" : "false")" />
+                            </div>
+                        </div>
+                    }
+                </div>
+                <input type="hidden" id="hidden_OrdemImagensLink" name="OrdemImagensIds" value="" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="form-group">
         <hr />
         <input asp-acessando-como type="submit" value="Salvar" class="btn btn-primary" />
@@ -60,3 +138,24 @@
         }
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/upload-imagem.js" asp-append-version="true"></script>
+    <script>
+        (function () {
+            // Ao submeter o form, serializa a galeria nos campos apropriados
+            var frm = document.querySelector('form');
+            if (frm) {
+                frm.addEventListener('submit', function () {
+                    var ids = [];
+                    document.querySelectorAll('#galeria_container_link .galeria-item').forEach(function (el, i) {
+                        var hOrdem = el.querySelector('.gi-ordem'); if (hOrdem) hOrdem.value = String(i);
+                        ids.push(el.getAttribute('data-id'));
+                    });
+                    var h = document.getElementById('hidden_OrdemImagensLink');
+                    if (h) h.value = JSON.stringify(ids);
+                });
+            }
+        })();
+    </script>
+}

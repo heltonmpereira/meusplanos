@@ -1,5 +1,14 @@
 
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @model MeusPlanos.AppCliente.ViewModel.PlanoItemViewModel
+
+@{
+    var baseUrlApi = Configuration["BaseUrlApi"]?.TrimEnd('/');
+    string imgCapaUrl = null;
+    if (Model?.ImagemCapa != null && !string.IsNullOrWhiteSpace(Model.ImagemCapa.CaminhoRelativo))
+        imgCapaUrl = $"{baseUrlApi}/uploads/imagens/{Model.ImagemCapa.CaminhoRelativo.Replace('\\', '/')}";
+}
 
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -32,6 +41,19 @@
 </div>
 
 <div class="row">
+    @await Html.PartialAsync("_PartialUploadImagemCapa",
+        Model?.ImagemCapa,
+        new ViewDataDictionary(ViewData)
+        {
+            ["CampoId"] = "ImagemCapaId",
+            ["ImagemId"] = Model?.ImagemCapaId?.ToString(),
+            ["ImagemUrl"] = imgCapaUrl,
+            ["ImagemNome"] = Model?.ImagemCapa?.NomeOriginal,
+            ["ImagemTamanho"] = Model?.ImagemCapa?.TamanhoFormatado
+        })
+</div>
+
+<div class="row">
     <div class="form-group">
         <hr />
         <input asp-acessando-como type="submit" value="Salvar" class="btn btn-primary" />
@@ -46,3 +68,7 @@
         }
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/upload-imagem.js" asp-append-version="true"></script>
+}

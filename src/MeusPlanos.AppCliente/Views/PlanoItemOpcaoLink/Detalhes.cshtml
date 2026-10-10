@@ -1,9 +1,19 @@
 
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @model MeusPlanos.AppCliente.ViewModel.PlanoItemOpcaoLinkViewModel
 
 @{
     ViewData["Title"] = "Link / Oferta";
     ViewData["Icone"] = "<i class='fa fa-link fa-lg text-primary'></i>";
+
+    string BaseUrl() => Configuration["BaseUrlApi"]?.TrimEnd('/');
+    string ImgUrl(string cam) => string.IsNullOrWhiteSpace(cam) || string.IsNullOrWhiteSpace(BaseUrl())
+        ? null : $"{BaseUrl()}/uploads/imagens/{cam.Replace('\\', '/')}";
+
+    var ordenadas = Model?.ImagensLinks?
+        .OrderBy(i => i.Ordem)
+        .ToList() ?? new List<MeusPlanos.AppCliente.ViewModel.PlanoItemOpcaoLinkImagemViewModel>();
 
     @section Scripts {
         @{
@@ -14,6 +24,49 @@
 
 <div class="col-11 px-sm-3 px-md-0 pt-4 mx-auto">
     <h1>Detalhes do Link / Oferta</h1>
+
+    @if (ordenadas.Any())
+    {
+        var capa = ordenadas.FirstOrDefault(o => o.EhCapa) ?? ordenadas.FirstOrDefault();
+        var capaUrl = ImgUrl(capa?.Imagem?.CaminhoRelativo);
+        if (!string.IsNullOrWhiteSpace(capaUrl))
+        {
+            <div class="mb-4 text-center">
+                <img src="@capaUrl" alt="Capa do Link" class="img-fluid img-thumbnail rounded" style="max-height:320px;object-fit:contain;" />
+            </div>
+        }
+
+        <h3 class="mt-2">Galeria (@ordenadas.Count imagem/ens)</h3>
+        <hr />
+        <div class="d-flex flex-wrap gap-3 mb-4">
+            @foreach (var img in ordenadas)
+            {
+                var u = ImgUrl(img?.Imagem?.CaminhoRelativo);
+                if (!string.IsNullOrWhiteSpace(u))
+                {
+                    <div class="card @(img.EhCapa ? "border-primary border-2" : ViewBag.ClasseCard)" style="width:180px;">
+                        <a href="@u" target="_blank" rel="noopener noreferrer">
+                            <img src="@u" class="card-img-top p-2" style="height:150px;object-fit:contain;background:#fff;border-bottom:1px solid var(--bs-border-color, #dee2e6);" alt="@img?.Imagem?.NomeOriginal" />
+                        </a>
+                        <div class="card-body p-2 small">
+                            @if (img.EhCapa)
+                            {
+                                <span class="badge bg-primary mb-1"><i class="fas fa-star"></i> Capa</span>
+                            }
+                            <div class="text-truncate" title="@img?.Imagem?.NomeOriginal">@img?.Imagem?.NomeOriginal</div>
+                            <div class="text-muted">
+                                @if (!string.IsNullOrWhiteSpace(img?.Imagem?.TamanhoFormatado))
+                                {
+                                    <span>@img.Imagem.TamanhoFormatado</span>
+                                }
+                                <span> · Ordem @img?.Ordem</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    }
 
     @Html.DisplayFor(model => model)
 

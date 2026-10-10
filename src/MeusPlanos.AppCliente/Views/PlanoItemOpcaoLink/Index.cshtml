@@ -1,3 +1,6 @@
+
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @using MeusPlanos.AppCliente.Models.Interface;
 @model ListaBaseViewModel<PlanoItemOpcaoLinkViewModel>
 
@@ -7,6 +10,10 @@
     var opcaoId = Context.Request.Query["PlanoItemOpcaoId"].FirstOrDefault();
     var routeNovo = opcaoId != null ? new { PlanoItemOpcaoId = opcaoId } : null;
     ViewData["LinkNovo"] = Url.Action("Incluir", routeNovo);
+
+    string BaseUrl() => Configuration["BaseUrlApi"]?.TrimEnd('/');
+    string ImgUrl(string cam) => string.IsNullOrWhiteSpace(cam) || string.IsNullOrWhiteSpace(BaseUrl())
+        ? null : $"{BaseUrl()}/uploads/imagens/{cam.Replace('\\', '/')}";
 
     var filtro = Model == null ? null : Model.FiltroViewModel;
     await Html.RenderPartialAsync("_PartialFiltro", filtro);
@@ -53,6 +60,7 @@ else if (Model != null && Model.Itens != null && Model.Itens.Any())
         <table class="table table-striped table-hover table-valign-middle @tableTheme">
             <thead class="table-primary">
                 <tr>
+                    <th style="width:72px;">Capa</th>
                     <th>
                         <asp-cabecalho asp-for="Itens.FirstOrDefault().NomeSite"/>
                     </th>
@@ -65,17 +73,42 @@ else if (Model != null && Model.Itens != null && Model.Itens.Any())
                     <th>
                         <asp-cabecalho asp-for="Itens.FirstOrDefault().CondicoesPagamento"/>
                     </th>
+                    <th style="width:90px;">Imagens</th>
                     <th colspan="3">Ações</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
                 @foreach (var item in Model.Itens)
                 {
+                    var primImg = item.ImagensLinks?
+                        .OrderBy(i => i.Ordem)
+                        .FirstOrDefault(i => i.EhCapa)
+                        ?? item.ImagensLinks?.OrderBy(i => i.Ordem).FirstOrDefault();
+                    var capa = ImgUrl(primImg?.Imagem?.CaminhoRelativo);
+                    var qtd = item.ImagensLinks?.Count ?? 0;
                     <tr class="align-middle">
+                        <td class="p-1 text-center">
+                            @if (!string.IsNullOrWhiteSpace(capa))
+                            {
+                                <img src="@capa" class="img-fluid rounded border" style="max-width:60px;max-height:40px;object-fit:cover;" />
+                            }
+                            else
+                            {
+                                <span class="text-muted small"><i class="fa-regular fa-image fa-lg"></i></span>
+                            }
+                        </td>
                         <td>@Html.DisplayFor(modelItem => item.NomeSite)</td>
                         <td>@Html.DisplayFor(modelItem => item.Valor)</td>
                         <td>@Html.DisplayFor(modelItem => item.DataCotacao)</td>
                         <td>@Html.DisplayFor(modelItem => item.CondicoesPagamento)</td>
+                        <td>
+                            @if (qtd > 0)
+                            {
+                                <span class="badge @(ViewBag.ClasseBotao)info" title="@qtd imagem/ens na galeria">
+                                    <i class="fa-regular fa-images"></i> @qtd
+                                </span>
+                            }
+                        </td>
                         <td class="p-2 align-content-center w150px">
                             <div class="btn-group" role="group" aria-label="Botões de ação">
                                 @if (!string.IsNullOrWhiteSpace(item.Url))

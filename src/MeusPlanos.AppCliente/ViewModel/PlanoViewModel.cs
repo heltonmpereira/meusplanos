@@ -23,6 +23,9 @@ public class PlanoViewModel : BaseViewModel, IEntidade<Guid>
     public Guid ProprietarioId { get; set; }
     public UsuarioViewModel Proprietario { get; set; }
 
+    public Guid? ImagemCapaId { get; set; }
+    public ImagemViewModel ImagemCapa { get; set; }
+
     public ICollection<PlanoItemViewModel> Itens { get; set; }
 
     //public ICollection<GrupoPlano> Grupos { get; set; }

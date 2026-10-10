@@ -15,6 +15,9 @@ public class PlanoItemOpcaoViewModel : BaseViewModel, IEntidade<Guid>
     public string Caracteristicas { get; set; }
     public int Ordem { get; set; }
 
+    public Guid? ImagemCapaId { get; set; }
+    public ImagemViewModel ImagemCapa { get; set; }
+
     public DateTime DataCriacao { get; set; }
     public DateTime? DataAlteracao { get; set; }
     public DateTime? DataDelecao { get; set; }

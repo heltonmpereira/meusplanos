@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using MeusPlanos.AppCliente.ViewModel.Base;
 using MeusPlanos.Definicao.Interface.Entidade;
 
@@ -19,4 +20,6 @@ public class PlanoItemOpcaoLinkViewModel : BaseViewModel, IEntidade<Guid>
     public DateTime DataCriacao { get; set; }
     public DateTime? DataAlteracao { get; set; }
     public DateTime? DataDelecao { get; set; }
+
+    public ICollection<PlanoItemOpcaoLinkImagemViewModel> ImagensLinks { get; set; }
 }

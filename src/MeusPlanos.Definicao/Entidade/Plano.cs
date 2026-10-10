@@ -22,12 +22,11 @@ public class Plano : IEntidade<Guid>
     public Guid ProprietarioId { get; set; }
     public Usuario Proprietario { get; set; }
 
-    public ICollection<PlanoItem> Itens { get; set; }
+    public Guid? ImagemCapaId { get; set; }
+    public Imagem ImagemCapa { get; set; }
 
-    //public ICollection<GrupoPlano> Grupos { get; set; }
-    //public ICollection<Aporte> Aportes { get; set; }
+    public ICollection<PlanoItem> Itens { get; set; }
 }
 
 //TODO: executar a atualização da base de dados após a criação do módulo, por exemplo:
 //add-migration PlanoMigration -Project 02-Servidor\MeusPlanos.Modelo -StartupProject 02-Servidor\MeusPlanos.AppServer
-

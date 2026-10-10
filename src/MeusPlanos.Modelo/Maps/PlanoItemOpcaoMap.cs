@@ -26,5 +26,11 @@ public class PlanoItemOpcaoMap : BaseMap<PlanoItemOpcao, Guid>
             .IsRequired();
 
         builder.HasIndex(i => i.PlanoItemId);
+
+        builder
+            .HasOne(p => p.ImagemCapa)
+            .WithMany()
+            .HasForeignKey(p => p.ImagemCapaId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

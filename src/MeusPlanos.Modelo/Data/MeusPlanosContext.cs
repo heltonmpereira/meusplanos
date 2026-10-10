@@ -135,4 +135,6 @@ public class MeusPlanosContext(DbContextOptions options) : DbContext(options), I
     public DbSet<PlanoItemOpcao> PlanoItemOpcoes { get; set; }
     public DbSet<PlanoItemOpcaoLink> PlanoItemOpcaoLinks { get; set; }
     public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Imagem> Imagens { get; set; }
+    public DbSet<PlanoItemOpcaoLinkImagem> PlanoItemOpcaoLinkImagens { get; set; }
 }

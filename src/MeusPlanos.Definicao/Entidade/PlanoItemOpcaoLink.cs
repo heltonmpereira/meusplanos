@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using MeusPlanos.Definicao.Interface.Entidade;
 
@@ -32,4 +33,6 @@ public class PlanoItemOpcaoLink : IEntidade<Guid>
     public DateTime DataCriacao { get; set; }
     public DateTime? DataAlteracao { get; set; }
     public DateTime? DataDelecao { get; set; }
+
+    public ICollection<PlanoItemOpcaoLinkImagem> ImagensLinks { get; set; }
 }
