@@ -11,7 +11,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-// usando Swashbuckle para Swagger; não referenciando tipos OpenApi diretamente para compatibilidade
+using Microsoft.Extensions.Options;
+using Microsoft.OpenApi;
+
+// usando Swashbuckle para Swagger; tipos OpenApi serão manipulados por reflexão para compatibilidade
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -36,8 +39,27 @@ public class Startup(IConfiguration configuration)
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
-        // Configuração mínima do Swagger; detalhes (security, info) podem ser adicionados via NuGet compatível
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "MeusPlanos - API",
+                Version = "v1"
+            });
+
+            c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+            {
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer",
+                BearerFormat = "JWT",
+                Description = "JWT Authorization header using the Bearer scheme."
+            });
+
+            c.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+            {
+                [new OpenApiSecuritySchemeReference("bearer", document)] = []
+            });
+        });
 
         var origins = Configuration.GetSection("CorsOrigins").Value.Split(',').Select(s => s.Trim()).ToArray();
         if (origins != null && origins.Length > 0)
