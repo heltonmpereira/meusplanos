@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-// using Microsoft.OpenApi.Models; (removido para compatibilidade de compilação)
+// usando Swashbuckle para Swagger; não referenciando tipos OpenApi diretamente para compatibilidade
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -36,7 +36,8 @@ public class Startup(IConfiguration configuration)
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
-        // Swagger desabilitado temporariamente para corrigir erros de compilação relacionados a referências OpenApi
+        // Configuração mínima do Swagger; detalhes (security, info) podem ser adicionados via NuGet compatível
+        services.AddSwaggerGen();
 
         var origins = Configuration.GetSection("CorsOrigins").Value.Split(',').Select(s => s.Trim()).ToArray();
         if (origins != null && origins.Length > 0)
