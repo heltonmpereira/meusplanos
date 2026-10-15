@@ -15,11 +15,12 @@
 		<PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
 		<PackageReference Include="NWebsec.AspNetCore.Mvc" Version="3.0.0" />
 		<PackageReference Include="NWebsec.AspNetCore.Mvc.TagHelpers" Version="3.0.0" />
-		<PackageReference Include="Refit" Version="15.2.0" />
-		<PackageReference Include="Refit.HttpClientFactory" Version="15.2.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.12" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="10.0.12" />
-		<PackageReference Include="Refit.Reflection" Version="15.2.0" />
+		<PackageReference Include="Refit" Version="16.3.0" />
+		<PackageReference Include="Refit.HttpClientFactory" Version="16.3.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.13" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="10.0.13" />
+		<PackageReference Include="Refit.Reflection" Version="16.3.0" />
+		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
 		<!--<PackageReference Include="System.Text.Json" Version="10.0.12" />-->
 		<PackageReference Include="WebEssentials.AspNetCore.PWA" Version="1.0.85" />
 		<PackageReference Include="X.PagedList.Mvc.Core" Version="10.6.0" />
