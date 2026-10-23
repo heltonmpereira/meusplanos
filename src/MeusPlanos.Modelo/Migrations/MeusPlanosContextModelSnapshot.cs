@@ -18,7 +18,7 @@ namespace MeusPlanos.Modelo.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .UseCollation("SQL_Latin1_General_CP1_CI_AI")
-                .HasAnnotation("ProductVersion", "10.0.12")
+                .HasAnnotation("ProductVersion", "10.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -502,7 +502,7 @@ namespace MeusPlanos.Modelo.Migrations
                     b.HasOne("MeusPlanos.Definicao.Entidade.Plano", "Plano")
                         .WithMany("Itens")
                         .HasForeignKey("PlanoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ImagemCapa");
@@ -520,7 +520,7 @@ namespace MeusPlanos.Modelo.Migrations
                     b.HasOne("MeusPlanos.Definicao.Entidade.PlanoItem", "PlanoItem")
                         .WithMany("Opcoes")
                         .HasForeignKey("PlanoItemId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ImagemCapa");
@@ -533,7 +533,7 @@ namespace MeusPlanos.Modelo.Migrations
                     b.HasOne("MeusPlanos.Definicao.Entidade.PlanoItemOpcao", "PlanoItemOpcao")
                         .WithMany("Links")
                         .HasForeignKey("PlanoItemOpcaoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("PlanoItemOpcao");

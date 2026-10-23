@@ -18,6 +18,6 @@ public class PlanoMap : BaseMap<Plano, Guid>
             .HasOne(p => p.ImagemCapa)
             .WithMany()
             .HasForeignKey(p => p.ImagemCapaId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

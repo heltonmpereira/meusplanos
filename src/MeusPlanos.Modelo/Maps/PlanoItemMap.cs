@@ -22,7 +22,7 @@ public class PlanoItemMap : BaseMap<PlanoItem, Guid>
             .HasOne(o => o.Plano)
             .WithMany(m => m.Itens)
             .HasForeignKey(fk => fk.PlanoId)
-            .OnDelete(DeleteBehavior.Restrict)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         builder.HasIndex(i => i.PlanoId);

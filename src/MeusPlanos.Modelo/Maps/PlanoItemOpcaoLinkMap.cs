@@ -23,7 +23,7 @@ public class PlanoItemOpcaoLinkMap : BaseMap<PlanoItemOpcaoLink, Guid>
             .HasOne(o => o.PlanoItemOpcao)
             .WithMany(m => m.Links)
             .HasForeignKey(fk => fk.PlanoItemOpcaoId)
-            .OnDelete(DeleteBehavior.Restrict)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         builder.HasIndex(i => i.PlanoItemOpcaoId);
