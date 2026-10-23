@@ -479,7 +479,7 @@ namespace MeusPlanos.Modelo.Migrations
                     b.HasOne("MeusPlanos.Definicao.Entidade.Imagem", "ImagemCapa")
                         .WithMany()
                         .HasForeignKey("ImagemCapaId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("MeusPlanos.Definicao.Entidade.Usuario", "Proprietario")
                         .WithMany()
